@@ -1,0 +1,81 @@
+function [lag]=lagrangian(time,set)
+
+n=length(set.xstart);
+
+
+lag=lagrangiandef;
+
+%np_out     !!number of particles outside domain
+%itag       !!label for the particle 
+%host       !!element containing particle
+%found      !!host element is found       
+%indomain   !!particle is in the domain   
+%sbound     !!host element has a solid boundary node   
+%xp         !!x position of particle 
+%yp         !!y position of particle 
+%sigp       !!sigmaposition of particle 
+%xplst      !!last x position of particle 
+%yplst      !!last y position of particle 
+%sigplst    !!last sigma position of particle 
+%xpt        !!x absolute position of particle
+%ypt        !!y absolute position of particle 
+%sigpt      !!z absolute position of particle 
+%up         !!u velocity of particle 
+%vp         !!v velocity of particle 
+%wp         !!omega velocity of particle
+%hp         !!bathymetry at particle position
+%ep         !!free surface height at particle 
+%w_swimspeed !!swim_speed in z coords
+%omega_swimspeed !!swim_speed in sigma coords
+
+lag.np_out=0;
+lag.npts=n;
+lag.time=zeros(time.outt,1);
+lag.host=zeros(n,1);
+lag.ifound=zeros(n,1);
+lag.indomain=zeros(n,1);
+lag.sbound=zeros(n,1);
+lag.inwater=zeros(n,1);
+lag.chix=zeros(n,4);
+lag.chiy=zeros(n,4);
+lag.chiz=zeros(n,4);
+lag.xp=zeros(n,1);
+lag.yp=zeros(n,1);
+lag.sigp=zeros(n,1);
+lag.xplst=zeros(n,1);
+lag.yplst=zeros(n,1);
+lag.sigplst=zeros(n,1);
+lag.xpt=zeros(n,1);
+lag.ypt=zeros(n,1);
+lag.sigpt=zeros(n,1);
+lag.up=zeros(n,1);
+lag.vp=zeros(n,1);
+lag.wp=zeros(n,1);
+lag.omega_swimspeed=zeros(n,1);
+lag.w_swimspeed=set.swimspeed;
+lag.hp=zeros(n,1);
+lag.ep=zeros(n,1);
+lag.dedtp=zeros(n,1);
+
+lag.x=zeros(n,time.outt);
+lag.y=zeros(n,time.outt);
+lag.sig=zeros(n,time.outt);
+lag.z=zeros(n,time.outt);
+lag.u=zeros(n,time.outt);
+lag.v=zeros(n,time.outt);
+lag.w=zeros(n,time.outt);
+lag.check_turbine_intersect=set.check_turbines;
+
+lag.xpt=set.xstart;
+lag.ypt=set.ystart;
+lag.sigpt=set.sigstart;
+
+
+
+
+
+
+
+
+
+
