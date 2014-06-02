@@ -25,8 +25,6 @@ classdef timetrackerdef
 		outt
 		loopsperhour
 		outtimesperhour
-
-
 	end
 end
 

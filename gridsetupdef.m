@@ -36,24 +36,14 @@ classdef gridsetupdef
 		hin
 		ein
 		dedtin
-%		ntve
-%		nbve
-%		nbvt
 		unc1
 		vnc1
 		wnc1
-        	elnc1
-       
+        elnc1       
 		unc2
 		vnc2
 		wnc2
-       		elnc2
-
-		unct
-		vnct
-		wnct
-        	elnct
-        
+       	elnc2        
 		vxmax
 		vxmin
 		vymax
@@ -62,17 +52,14 @@ classdef gridsetupdef
 		dz
 		dzz
 		nb_tmp
-
 		u1
 		v1
 		w1
-        	el1
+        el1
 		u2
 		v2
 		w2
-        	el2
-
-		size
+        el2
         closest
         nturbines
         turbines

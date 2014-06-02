@@ -17,7 +17,6 @@ n=length(set.xstart);
 lag=lagrangiandef;
 
 %%%%%%% some of these are outdated and need to be updated.
-%np_out     !!number of particles outside domain
 %itag       !!label for the particle 
 %host       !!element containing particle
 %found      !!host element is found       
@@ -26,9 +25,6 @@ lag=lagrangiandef;
 %xp         !!x position of particle 
 %yp         !!y position of particle 
 %sigp       !!sigmaposition of particle 
-%xplst      !!last x position of particle 
-%yplst      !!last y position of particle 
-%sigplst    !!last sigma position of particle 
 %xpt        !!x absolute position of particle
 %ypt        !!y absolute position of particle 
 %sigpt      !!z absolute position of particle 
@@ -40,7 +36,7 @@ lag=lagrangiandef;
 %w_swimspeed !!swim_speed in z coords
 %omega_swimspeed !!swim_speed in sigma coords
 
-lag.np_out=0;
+
 lag.npts=n;
 lag.time=zeros(time.outt,1);
 lag.host=zeros(n,1);
@@ -54,9 +50,6 @@ lag.chiz=zeros(n,4);
 lag.xp=zeros(n,1);
 lag.yp=zeros(n,1);
 lag.sigp=zeros(n,1);
-lag.xplst=zeros(n,1);
-lag.yplst=zeros(n,1);
-lag.sigplst=zeros(n,1);
 lag.xpt=zeros(n,1);
 lag.ypt=zeros(n,1);
 lag.sigpt=zeros(n,1);

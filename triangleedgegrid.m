@@ -95,7 +95,7 @@ tic
 toc
     
     gridclosest=grid.closest;
-    mkdir('grid_closest')
+    if ~exist('grid_closest','dir'), mkdir('grid_closest'); end
     save(['grid_closest/' gridclosestname '.mat'],'gridclosest');
 
 else

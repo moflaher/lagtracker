@@ -20,11 +20,10 @@ classdef settingsdef
 		xstart
 		ystart
 		sigstart
-		numberoftimesteps
 		swimspeed
 		starter
 		option
-        	check_turbines
+        check_turbines
 	end
 	
 	

@@ -14,7 +14,6 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Update particle positions, calculate scalar fields and particle velocities
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 	grid.u1=grid.unc1;
 	grid.v1=grid.vnc1;
 	grid.w1=grid.wnc1;
@@ -87,9 +86,6 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
                		lag.v(array,time.itout)=0;
 				    lag.w(array,time.itout)=0;
 				    lag.time(time.itout)=(time.iint*time.dti)+(time.starthour*time.instp);
-				    lag.xplst = lag.xp;
-				    lag.yplst = lag.yp;
-				    lag.sigplst = lag.sigp;
         		end%if3
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -106,10 +102,10 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Time step update of velocity fields from ncfile.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		grid.unc1(:)=grid.unc2(:);
-		grid.vnc1(:)=grid.vnc2(:);
-		grid.wnc1(:)=grid.wnc2(:);
-		grid.elnc1(:)=grid.elnc2(:);		
+		grid.unc1=grid.unc2;
+		grid.vnc1=grid.vnc2;
+		grid.wnc1=grid.wnc2;
+		grid.elnc1=grid.elnc2;		
 
 	end%mainfor
 

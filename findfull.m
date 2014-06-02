@@ -35,7 +35,6 @@ function [lag,grid]=findfull(lag,grid,pter)
 %    Second is based on finding which particles are in each host.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-tic
 	if length(array)<=length(idxa)
 	    for jj=1:length(array)%mainfor
 		    i=array(jj);
@@ -86,6 +85,5 @@ tic
 	    lag.inwater(lag.ifound == 1 & lag.sbound == 0)=1;
 
     end
-toc
 
 end

@@ -13,7 +13,6 @@ classdef lagrangiandef
 %summary
 
 	properties		
-		np_out
 		npts
 		time
 		host
@@ -24,9 +23,6 @@ classdef lagrangiandef
 		xp
 		yp
 		sigp
-		xplst
-		yplst
-		sigplst
 		xpt
 		ypt
 		sigpt
@@ -35,7 +31,7 @@ classdef lagrangiandef
 		wp
 		hp
 		ep
-        	dedtp
+        dedtp
 		x
 		y
 		sig
