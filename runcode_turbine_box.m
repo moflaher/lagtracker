@@ -1,10 +1,12 @@
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Input: 
+% Return: 
+% 
+%  Code to run main_turbine_box should be updated.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%add mexcdf paths (if not already in your setpath)
-addpath /array/home/user/static/mexcdf/netcdf_toolbox/netcdf/ncutility
-addpath /array/home/user/static/mexcdf/netcdf_toolbox/netcdf/nctype
-addpath /array/home/user/static/mexcdf/netcdf_toolbox/netcdf
-addpath /array/home/user/static/mexcdf/mexnc
 
 %number of particle released in a box
 numparts=500;

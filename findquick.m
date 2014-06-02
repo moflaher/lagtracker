@@ -1,10 +1,18 @@
-function [allfound,lag,grid]=findquick(lag,grid)%,pter)
-%!==============================================================================|
-%!  Determine Which Element A List of Particles Reside in By Searching          |
-%!  Neighboring Elements.  Updates host component of lagrangian Particle        |  
-%!  Type and updates logical array "ELEM_found" flagging whether the host       |
-%!  Has been found							         |
-%!==============================================================================|
+function [allfound,lag,grid]=findquick(lag,grid)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Input: lag,grid
+% Return: allfound,lag,grid
+% 
+%  Determine Which Element A List of Particles Reside in By Searching Neighboring Elements.  
+%  Updates host component of lagrangian Particle. 
+%  Updates array "ifound" flagging whether the host has been found.	
+%  allfound shows if the locations of all particles are known.
+%
+%   This fuction is only used in newinterpolateelh. 
+%   Should check to see if this can be removed or functionality merged with newfindquick.m
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 	allfound=0;
     lag.ifound=0*lag.ifound;

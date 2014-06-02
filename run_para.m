@@ -1,32 +1,19 @@
-classdef timetrackerdef
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Input: 
 % Return: 
 %
-%   Object file defining timetracker.
+%   Run code in parallel and save particle postions.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%summary
-
-	properties	
-		starthour
-		finishhour
-		trackingtime
-		itout
-		iint
-		int2
-		dtout
-		dti
-		instp
-		i2
-		outt
-		loopsperhour
-		outtimesperhour
-
-
+matlabpool open 6
+	parfor starti=1:start_times
+		starti
+        pause(starti)
+		savelag{starti}=main(starti);
 	end
-end
 
+save('savedir/lag_out.mat','savelag');
+
+matlabpool close

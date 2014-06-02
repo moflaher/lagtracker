@@ -1,5 +1,16 @@
 function [isintriangle]=trianglechecker(xt,yt,x0,y0) 
 	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Input: xt,yt,x0,y0
+% Return: triangle
+%
+%   Check to see if x0,y0 is in element define by xt,yt.
+%   Using Algorithm Used for Scene Rendering in Computer Graphics   
+%
+%   This should be speed tested for current use cases against buildin matlab functions.
+%   Very similar to other triangle checkers should be a way to merge them.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 	%code taken from pt_farm changed syntax for matlab
 	%==============================================================================|
   	%  Determine if Point (x0,y0) Is In triangle defined by nodes (xt(3),yt(3))    |

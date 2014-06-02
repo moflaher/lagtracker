@@ -1,10 +1,22 @@
 function [lag]=lagrangian(time,set)
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Input: time,set
+% Return: lag
+%
+%   Initializes arrays for lag.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
 n=length(set.xstart);
 
 
 lag=lagrangiandef;
 
+%%%%%%% some of these are outdated and need to be updated.
 %np_out     !!number of particles outside domain
 %itag       !!label for the particle 
 %host       !!element containing particle

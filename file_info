@@ -1,16 +1,8 @@
-runcode.m
-This was used to start particle everywhere and check for the particle and turbine intersections
-It runs with main.m
+run_single.m
+Runs main.m using a single core. Tracks particles defined in settings.m, and xysigstart.m
 
-
-runcode_turbine_box.m
-This was used to start particle around the location of an element that the nc-file reports to be a turbine also give particle a sinking speed.
-It runs with main_turbine_box.m
-
-
-main.m and main_turbine_box.m
-These files are similar main_turbine_box.m has extra code that was used to calculate the average distance travelled by a particle.
-
+run_para.m
+Runs main.m using a single core. Tracks particles defined in settings.m, and xysigstart.m
 
 object files (define the properties of an object)
 gridsetupdef.m
@@ -18,18 +10,18 @@ lagrangiandef.m
 timetrackerdef.m
 settingsdef.m
 
-
 object initialization files
 gridsetup.m
 lagrangian.m
 timetracker.m
 settings.m
 
-
 There are a few things that still need to be cleaned or made in to single files as their function is very similar.
 main.m & main_turbine_box.m
 multitrianglechecker.m & trianglechecker.m
 findquick.m & newfindquick.m
 
-
-
+runcode_turbine_box.m
+This was used to start particle around the location of an element that the nc-file reports to be a turbine also give particle a sinking speed.
+It runs with main_turbine_box.m
+Not tested in this version.

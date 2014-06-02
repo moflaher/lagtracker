@@ -1,4 +1,11 @@
-function lag=check_turbine_intersections(lag,grid)
+function [lag]=check_turbine_intersections(lag,grid)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Input: lag,grid
+% Return: lag
+% 
+%  Finds all particles in a turbine element.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 for i=1:grid.nturbines
 	%check if point is in turbine triangle

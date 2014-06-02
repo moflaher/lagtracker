@@ -1,32 +1,17 @@
-classdef timetrackerdef
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Input: 
 % Return: 
 %
-%   Object file defining timetracker.
+%   Run code on single core and save particle postions.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%summary
+start_times=1;
 
-	properties	
-		starthour
-		finishhour
-		trackingtime
-		itout
-		iint
-		int2
-		dtout
-		dti
-		instp
-		i2
-		outt
-		loopsperhour
-		outtimesperhour
-
-
+%single cpu 
+	for starti=1:start_times
+		starti
+		savelag{starti}=main(starti);
 	end
-end
-
+save('savedir/lag_out.mat','savelag');

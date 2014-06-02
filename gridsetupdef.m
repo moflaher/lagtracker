@@ -1,5 +1,13 @@
 classdef gridsetupdef
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Input: 
+% Return: 
+%
+%   Object file defining grid.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %summary
 
 	properties		
@@ -69,6 +77,8 @@ classdef gridsetupdef
         nturbines
         turbines
         turbine_sigmas
+        ncfile
+        time
 	end
 
 end

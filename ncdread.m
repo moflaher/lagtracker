@@ -1,10 +1,17 @@
-function [grid]=ncdread(grid,hour)
+function [grid]=ncdread(grid,nh)
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Input: grid,nh
+% Return: grid
+% 
+%  Updates velocity and elevation fields to time nh.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-h=mod(hour,grid.size)+1;
+ncid=netcdf.open(grid.ncfile,'NC_NOWRITE');
 
+grid.unc2 = netcdf.getVar(ncid,netcdf.inqVarID(ncid,'u'),[0 0 nh],[grid.nele grid.siglay 1]);
+grid.vnc2 = netcdf.getVar(ncid,netcdf.inqVarID(ncid,'v'),[0 0 nh],[grid.nele grid.siglay 1]);
+grid.wnc2 = netcdf.getVar(ncid,netcdf.inqVarID(ncid,'ww'),[0 0 nh],[grid.nele grid.siglay 1]);
+grid.elnc2=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'zeta'),[0 nh],[grid.node 1]);
 
-grid.unc2=grid.unct(:,:,h);
-grid.vnc2=grid.vnct(:,:,h);
-grid.wnc2=grid.wnct(:,:,h);
-grid.elnc2=grid.elnct(:,h);
+netcdf.close(ncid);

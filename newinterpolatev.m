@@ -1,18 +1,17 @@
 function [lag,grid]=newinterpolatev(lag,grid) 
 
-%!==============================================================================|
-%!  Given a set of pts (xp,yp,zp) of size npts, obtain a linear interpolation   |
-%!  of the provided velocity field (uin,vin,win) at these points                |
-%!                                                                              |
-%!  ReTuRnS:                                                                    |
-%!     up,vp,wp (velocity Field at x,y,z)                                       |
-%!                                                                              |
-%!==============================================================================|
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Input: lag,grid
+% Return: lag,grid
+%
+%  Takes (xpt,ypt,sigpt) from lag and (uin,vin,win) from grid.
+%  Obtains a linear interpolation of the provided velocity field (uin,vin,win) at these points.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
  
-%!==============================================================================!
-%!  deTeRMine eLeMenT COnTaininG pOint (xp,yp,zp)                               !
-%!==============================================================================!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Determine element containing point (xp,yp,sigpt)  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
   
@@ -23,9 +22,9 @@ function [lag,grid]=newinterpolatev(lag,grid)
 		[lag grid]=findfull(lag,grid,0);
   	end
 
-%!===============================================================================!
-%!  deTeRMine veLOCiTy, BaTHyMeTRy, and FRee SuRFaCe HeiGHT aT (xp,yp,zp)        !
-%!===============================================================================!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Determine velocity at (xp,yp,sigpt)  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     array=find(lag.indomain ==1 & lag.inwater ==1);
     
@@ -71,8 +70,10 @@ function [lag,grid]=newinterpolatev(lag,grid)
     dudx= grid.a1u(host,1).*grid.uin(host+m*(k2-1))+grid.a1u(host,2).*grid.uin(e(:,1)+m*(k2-1))+grid.a1u(host,3).*grid.uin(e(:,2)+m*(k2-1))+grid.a1u(host,4).*grid.uin(e(:,3)+m*(k2-1));
 	dudy= grid.a2u(host,1).*grid.uin(host+m*(k2-1))+grid.a2u(host,2).*grid.uin(e(:,1)+m*(k2-1))+grid.a2u(host,3).*grid.uin(e(:,2)+m*(k2-1))+grid.a2u(host,4).*grid.uin(e(:,3)+m*(k2-1));
 	ue02= grid.uin(host+m*(k2-1)) + dudx.*x0c + dudy.*y0c;
-    
+
     lag.up(array)= ue01.*zf1 + ue02.*zf2;
+
+
 
     dvdx= grid.a1u(host,1).*grid.vin(host+m*(k1-1))+grid.a1u(host,2).*grid.vin(e(:,1)+m*(k1-1))+grid.a1u(host,3).*grid.vin(e(:,2)+m*(k1-1))+grid.a1u(host,4).*grid.vin(e(:,3)+m*(k1-1));
 	dvdy= grid.a2u(host,1).*grid.vin(host+m*(k1-1))+grid.a2u(host,2).*grid.vin(e(:,1)+m*(k1-1))+grid.a2u(host,3).*grid.vin(e(:,2)+m*(k1-1))+grid.a2u(host,4).*grid.vin(e(:,3)+m*(k1-1));
@@ -84,26 +85,26 @@ function [lag,grid]=newinterpolatev(lag,grid)
     
     lag.vp(array)= ve01.*zf1 + ve02.*zf2;
 
-    a=sigpt==grid.z(1);
-        zf1(a)=1;
-        zf2(a)=0;
-        k1(a)=1;
-        k2(a)=1;
-    a=sigpt==grid.z(grid.siglev);
-        zf1(a)=0;
-        zf2(a)=1;
-        k1(a)=grid.siglev;
-        k2(a)=grid.siglev;
+    %a=sigpt==grid.z(1);
+    %    zf1(a)=1;
+    %    zf2(a)=0;
+    %    k1(a)=1;
+    %    k2(a)=1;
+    %a=sigpt==grid.z(grid.siglev);
+    %    zf1(a)=0;
+    %    zf2(a)=1;
+    %    k1(a)=grid.siglev;
+    %    k2(a)=grid.siglev;
 
-    a=sigpt<grid.z(1) & sigpt>grid.z(grid.siglev);
-%        dzp=grid.z*ones(size(sigpt(a)'))-ones(size(grid.z))*sigpt(a)';
-%        dzp(dzp<0)=1;
-        dzp=(1./grid.z)*sigpt(a)';
-        dzp(dzp<1)=10;
-        [mtemp k1(a)] = min(dzp);
-        k2(a)=k1(a)+1;		  
-        zf1(a)=(sigpt(a)-grid.z(k2(a)))./(grid.z(k1(a))-grid.z(k2(a)));
-        zf2(a)=(grid.z(k1(a))-sigpt(a))./(grid.z(k1(a))-grid.z(k2(a)));
+    %a=sigpt<grid.z(1) & sigpt>grid.z(grid.siglev);
+%    %    dzp=grid.z*ones(size(sigpt(a)'))-ones(size(grid.z))*sigpt(a)';
+%     %   dzp(dzp<0)=1;
+      %  dzp=(1./grid.z)*sigpt(a)';
+      %  dzp(dzp<1)=10;
+      %  [mtemp k1(a)] = min(dzp);
+      %  k2(a)=k1(a)+1;		  
+      %  zf1(a)=(sigpt(a)-grid.z(k2(a)))./(grid.z(k1(a))-grid.z(k2(a)));
+      %  zf2(a)=(grid.z(k1(a))-sigpt(a))./(grid.z(k1(a))-grid.z(k2(a)));
 
     [m n]=size(grid.win);
 
@@ -117,7 +118,9 @@ function [lag,grid]=newinterpolatev(lag,grid)
     
     lag.wp(array)= we01.*zf1 + we02.*zf2;
     
-    %Apply a noslip boundary at the bottom, setting all velocities to zero if the particle is at the bottom
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Apply a noslip boundary at the bottom, setting all velocities to zero if the particle is at the bottom
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	lag.up(lag.sigpt==-1)=0; 
 	lag.vp(lag.sigpt==-1)=0; 
 	lag.wp(lag.sigpt==-1)=0;

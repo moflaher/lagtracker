@@ -1,5 +1,15 @@
 classdef lagrangiandef
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Input: 
+% Return: 
+%
+%   Object file defining lag.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
 %summary
 
 	properties		
@@ -41,6 +51,7 @@ classdef lagrangiandef
         	turbine_intersects
         	turbine_sigma
         	check_turbine_intersect
+        simstart
 	end
 	
 	
