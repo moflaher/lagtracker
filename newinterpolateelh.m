@@ -5,7 +5,8 @@ function [lag,grid]=newinterpolateelh(lag,grid,ifc)
 % Return: lag,grid
 % Flags: 
 %   ifc  = 0 if host is known to have correct host elements for current particle positions.    
-%   ifc  = 1 if host should be updated (adds computational work particle positions.      
+%   ifc  = 1 if host should be updated (adds computational work particle positions.   
+%   This is always zero because newinterpolateelh is always currently called after interpolatev so the host position is known.   
 %
 %  Takes (xpt,ypt) from lag and (hin,ein,dedtin) from grid.
 %  Obtains a linear interpolation of the provided fields (hin,ein,dedtin) at these points.
@@ -18,10 +19,10 @@ function [lag,grid]=newinterpolateelh(lag,grid,ifc)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 	if(ifc == 1)
-		[allfound,lag,grid]=findquick(lag,grid);
+		[allfound,lag]=newfindquick(lag,grid);
 		if(allfound==0)
         		[lag,grid]=findfull(lag,grid,0);
-     		end
+     	end
   	end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

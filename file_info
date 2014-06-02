@@ -18,8 +18,6 @@ settings.m
 
 There are a few things that still need to be cleaned or made in to single files as their function is very similar.
 main.m & main_turbine_box.m
-multitrianglechecker.m & trianglechecker.m
-findquick.m & newfindquick.m
 
 runcode_turbine_box.m
 This was used to start particle around the location of an element that the nc-file reports to be a turbine also give particle a sinking speed.

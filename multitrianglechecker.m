@@ -7,8 +7,6 @@ function [triangle]=multitrianglechecker(xt,yt,x0,y0)
 %   Check to see which element define by xt,yt that x0,y0 is in
 %   Using Algorithm Used for Scene Rendering in Computer Graphics   
 %
-%   This should be speed tested for current use cases against buildin matlab functions.
-%   Very similar to newtrianglechecker should be a way to merge them.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
     f1 = (y0-yt(:,1)).*(xt(:,2)-xt(:,1)) - (x0-xt(:,1)).*(yt(:,2)-yt(:,1));

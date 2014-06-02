@@ -12,12 +12,7 @@ function [lag,grid]=newinterpolatev(lag,grid)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Determine element containing point (xp,yp,sigpt)  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-  
-  	[allfound lag]=newfindquick(lag,grid);
-
-    
+  	[allfound lag]=newfindquick(lag,grid);    
   	if(allfound==0)  
 		[lag grid]=findfull(lag,grid,0);
   	end
@@ -25,7 +20,6 @@ function [lag,grid]=newinterpolatev(lag,grid)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Determine velocity at (xp,yp,sigpt)  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
     array=find(lag.indomain ==1 & lag.inwater ==1);
     
     host=lag.host(array);
