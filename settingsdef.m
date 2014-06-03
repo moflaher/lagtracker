@@ -24,6 +24,7 @@ classdef settingsdef
 		starter
 		option
         check_turbines
+        diffusion
 	end
 	
 	

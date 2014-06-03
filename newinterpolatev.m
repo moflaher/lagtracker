@@ -55,6 +55,7 @@ function [lag,grid]=newinterpolatev(lag,grid)
         k2(a)=k1(a)+1;		  
         zf1(a)=(sigpt(a)-grid.zz(k2(a)))./(grid.zz(k1(a))-grid.zz(k2(a)));
         zf2(a)=(grid.zz(k1(a))-sigpt(a))./(grid.zz(k1(a))-grid.zz(k2(a)));
+
     
     [m n]=size(grid.uin);
     dudx= grid.a1u(host,1).*grid.uin(host+m*(k1-1))+grid.a1u(host,2).*grid.uin(e(:,1)+m*(k1-1))+grid.a1u(host,3).*grid.uin(e(:,2)+m*(k1-1))+grid.a1u(host,4).*grid.uin(e(:,3)+m*(k1-1));

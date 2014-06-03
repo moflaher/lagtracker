@@ -66,6 +66,18 @@ classdef gridsetupdef
         turbine_sigmas
         ncfile
         time
+        hele
+        diffusion
+        viscofhnc1
+        viscofhnc2
+        viscofh1
+        viscofh2
+        viscofhin
+        khnc1
+        khnc2
+        khin
+        kh1
+        kh2
 	end
 
 end

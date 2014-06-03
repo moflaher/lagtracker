@@ -76,7 +76,10 @@ lag.ypt=set.ystart;
 lag.sigpt=set.sigstart;
 
 
-
+if set.diffusion
+    lag.viscofhp=zeros(n,1);
+    lag.khp=zeros(n,1);
+end
 
 
 

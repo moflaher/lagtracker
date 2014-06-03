@@ -12,11 +12,17 @@ ncid=netcdf.open(set.fvcompath,'NC_NOWRITE');
 grid=gridsetupdef;
 
 grid.ncfile=set.fvcompath;
+if set.diffusion
+    grid.diffusion=true;
+else
+    grid.diffusion=false;
+end
 
 grid.vx=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'x'));
 grid.vy=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'y'));
 grid.nv=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'nv'));
 grid.h=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'h'));
+grid.hele=(grid.h(grid.nv(:,1))+grid.h(grid.nv(:,2))+grid.h(grid.nv(:,1)))/3;
 temp=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'siglev'));
 [nodes lsig]=size(temp);
 grid.zz=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'siglay'),[0 0],[1 lsig-1])';
@@ -49,12 +55,10 @@ grid.wnc1 = netcdf.getVar(ncid,netcdf.inqVarID(ncid,'ww'),[0 0 set.start],[grid.
 grid.elnc1=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'zeta'),[0 set.start],[grid.node 1]);
 grid.time=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'time'));
 
-
-
 grid.uin=grid.unc1;    
 grid.vin=grid.vnc1;    
 grid.win=grid.wnc1;  
-grid.ein=grid.elnc1;    
+grid.ein=grid.elnc1;   
 
 grid.unc2=zeros(grid.nele,grid.siglay);
 grid.vnc2=zeros(grid.nele,grid.siglay);
@@ -69,6 +73,24 @@ grid.u2=zeros(grid.nele,grid.siglay);
 grid.v2=zeros(grid.nele,grid.siglay);
 grid.w2=zeros(grid.nele,grid.siglay);
 grid.el2=zeros(grid.node,1);
+
+
+
+if grid.diffusion
+    grid.viscofhnc1 = netcdf.getVar(ncid,netcdf.inqVarID(ncid,'viscofh'),[0 0 set.start],[grid.node grid.siglay 1]);
+    grid.khnc1 = netcdf.getVar(ncid,netcdf.inqVarID(ncid,'v'),[0 0 set.start],[grid.node grid.siglev 1]);
+    grid.viscofhnc2=zeros(grid.node,grid.siglay);
+    grid.khnc2=zeros(grid.node,grid.siglev);
+    
+    grid.viscofhin=grid.viscofh;    
+    grid.khin=grid.kh;         
+    
+    grid.viscofh1=zeros(grid.node,grid.siglay);
+    grid.kh1=zeros(grid.node,grid.siglev);
+    grid.viscofh2=zeros(grid.node,grid.siglay);
+    grid.kh2=zeros(grid.node,grid.siglev);
+end
+
 
 grid.vxmax=0;
 grid.vxmin=0;

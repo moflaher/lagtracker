@@ -18,6 +18,11 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
 	grid.v1=grid.vnc1;
 	grid.w1=grid.wnc1;
     grid.el1=grid.elnc1;
+    if grid.diffusion
+        grid.viscofh1=grid.viscofhnc1;
+        grid.kh1=grid.khnc1;
+    end
+
 	
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -51,6 +56,10 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
         		grid.w2=tmp1*grid.wnc1+tmp2*grid.wnc2;
         		grid.el2=tmp1*grid.elnc1+tmp2*grid.elnc2;
                 grid.dedtin=(grid.el2-grid.el1)/time.dti;
+                if grid.diffusion
+                    grid.viscofh2=tmp1*grid.viscofhnc1+tmp2*grid.viscofhnc2;
+                    grid.kh2=tmp1*grid.khnc1+tmp2*grid.khnc2;
+                end
                 
 %turbine code has to be updated
                % thm1=mod(nh-1,grid.size)+1;
@@ -66,8 +75,7 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Save data to lag at set.outputstep.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        		if(mod(time.iint,time.int2) == 0)%if3                 
-
+        		if(mod(time.iint,time.int2) == 0)%if3  
 				    time.itout=time.itout+1;
                     array=lag.indomain==1;
                     lag.x(array,time.itout)=lag.xp(array) + grid.vxmin;
@@ -95,6 +103,10 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
 			grid.v1=grid.v2;
 			grid.w1=grid.w2;
 			grid.el1=grid.el2;
+            if grid.diffusion
+                grid.viscofh1=grid.viscofh2;
+                grid.kh1=grid.kh2;
+            end
 			
 
 		end%main2
@@ -105,7 +117,11 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
 		grid.unc1=grid.unc2;
 		grid.vnc1=grid.vnc2;
 		grid.wnc1=grid.wnc2;
-		grid.elnc1=grid.elnc2;		
+		grid.elnc1=grid.elnc2;	
+        if grid.diffusion
+            grid.viscofhnc1=grid.viscofhnc2;
+            grid.khnc1=grid.khnc2;
+        end	
 
 	end%mainfor
 

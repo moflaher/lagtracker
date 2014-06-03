@@ -37,6 +37,11 @@ lag.chix(:,1) = lag.up(:);
 lag.chiy(:,1) = lag.vp(:);
 lag.chiz(:,1) = lag.wp(:)./(lag.hp+lag.ep);  
 
+if grid.diffusion
+    lag.chix(:,1) = lag.up(:);
+    lag.chiy(:,1) = lag.vp(:);
+    lag.chiz(:,1) = lag.wp(:)./(lag.hp+lag.ep);  
+end
 
 
 	for ns=2:mstage%mainfor

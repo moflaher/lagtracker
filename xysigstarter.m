@@ -31,7 +31,7 @@ elseif set.option==2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	xbox_size=5000;
 	ybox_size=5000;
-	num_parts=1000;
+	num_parts=10;
 	
 		xs=(rand(num_parts,1)-0.5)*xbox_size;
 		ys=(rand(num_parts,1)-0.5)*ybox_size;
@@ -39,7 +39,7 @@ elseif set.option==2
         loc=45177;
 		set.xstart(:,1) = grid.xc(loc)+xs;
 		set.ystart(:,1)  = grid.yc(loc)+ys;
-		set.sigstart(:,1) = ones(num_parts,1)-1.1;
+		set.sigstart(:,1) = ones(num_parts,1)*-0.0001;
 
 elseif set.option==3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

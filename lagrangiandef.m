@@ -44,10 +44,15 @@ classdef lagrangiandef
 		chiz	
 		w_swimspeed
 		omega_swimspeed
-        	turbine_intersects
-        	turbine_sigma
-        	check_turbine_intersect
+        turbine_intersects
+        turbine_sigma
+        check_turbine_intersect
         simstart
+        viscofhp
+        khp  
+        viscofhx
+        viscofhy
+        khz      
 	end
 	
 	
