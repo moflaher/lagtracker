@@ -75,13 +75,11 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Calculate velocity field for stage n using c_rk coefficients
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		grid.uin  = ((1-c_rk(ns))*grid.u1 + c_rk(ns)*grid.u2);
-		grid.vin  = ((1-c_rk(ns))*grid.v1 + c_rk(ns)*grid.v2); 
-		grid.win  = ((1-c_rk(ns))*grid.w1 + c_rk(ns)*grid.w2); 
+		grid.uin(1:grid.nele,:)  = ((1-c_rk(ns))*grid.u1 + c_rk(ns)*grid.u2);
+		grid.vin(1:grid.nele,:)  = ((1-c_rk(ns))*grid.v1 + c_rk(ns)*grid.v2); 
+		grid.win(1:grid.nele,:)  = ((1-c_rk(ns))*grid.w1 + c_rk(ns)*grid.w2); 
 		grid.ein  = (1-c_rk(ns))*grid.el1 + c_rk(ns)*grid.el2;  
-		grid.uin(grid.nele+1,:)=0;    
-		grid.vin(grid.nele+1,:)=0;
-		grid.win(grid.nele+1,:)=0;
+
         if grid.diffusion
             grid.viscofhin  = ((1-c_rk(ns))*grid.viscofh1 + c_rk(ns)*grid.viscofh2);
 		    grid.khin  = ((1-c_rk(ns))*grid.kh1 + c_rk(ns)*grid.kh2); 

@@ -58,7 +58,10 @@ grid.time=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'time'));
 grid.uin=grid.unc1;    
 grid.vin=grid.vnc1;    
 grid.win=grid.wnc1;  
-grid.ein=grid.elnc1;   
+grid.ein=grid.elnc1; 
+grid.uin(grid.nele+1,:)=0;    
+grid.vin(grid.nele+1,:)=0;
+grid.win(grid.nele+1,:)=0;  
 
 grid.unc2=zeros(grid.nele,grid.siglay);
 grid.vnc2=zeros(grid.nele,grid.siglay);

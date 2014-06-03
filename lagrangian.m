@@ -79,7 +79,7 @@ lag.sigpt=set.sigstart;
 if set.diffusion
     lag.viscofhp=zeros(n,1);
     lag.khp=zeros(n,1);
-    lag.weiner=ones(4*time.outt,1);
+    lag.weiner=ones(4*(((time.trackingtime)*time.loopsperhour)+1),1);
 end
 
 
