@@ -76,19 +76,21 @@ elseif set.option==4
 	
 		
         %kitimat         
-        xlocu=242600+15000;
-        ylocu=310000+15000;
+        xlocu=242600-50000;
+        ylocu=310000-117000;
         
         %gilislandsouth         
-        xlocl=190000-15000;
-        ylocl=190000-15000;
+        xlocl=190000-10;
+        ylocl=190000-10;
 
 
         idx=find(grid.xc>= xlocl & grid.xc <=xlocu & grid.yc>= ylocl & grid.yc <=ylocu );
-		
-        set.xstart(:,1) = grid.xc(idx);
-		set.ystart(:,1)  = grid.yc(idx);
-		set.sigstart(:,1) = zeros(length(idx),1);
+        length(idx)
+        array=1:64;		
+
+        set.xstart(:,1) = grid.xc(idx(array));
+		set.ystart(:,1)  = grid.yc(idx(array));
+		set.sigstart(:,1) = ones(length(idx(array)),1)*-0.0001;
    
 else
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

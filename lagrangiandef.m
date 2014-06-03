@@ -52,7 +52,13 @@ classdef lagrangiandef
         khp  
         viscofhx
         viscofhy
-        khz      
+        khz     
+        weiner
+        diffh
+        diffx
+        diffy
+        diffv
+        diffz 
 	end
 	
 	

@@ -29,6 +29,9 @@ function [lag,grid,time]=setlag(lag,grid,time)
 	lag.sig(:,time.itout)=lag.sigpt(:);
     [lag,grid]=newinterpolatev(lag,grid);
     [lag,grid]=newinterpolateelh(lag,grid,0);
+    if grid.diffusion
+        [lag,grid]=interpolate_diffusion(lag,grid,0);
+    end	
 	lag.u(:,time.itout)=lag.up;
 	lag.v(:,time.itout)=lag.vp;
 	lag.w(:,time.itout)=lag.wp;

@@ -38,9 +38,17 @@ lag.chiy(:,1) = lag.vp(:);
 lag.chiz(:,1) = lag.wp(:)./(lag.hp+lag.ep);  
 
 if grid.diffusion
-    lag.chix(:,1) = lag.up(:);
-    lag.chiy(:,1) = lag.vp(:);
-    lag.chiz(:,1) = lag.wp(:)./(lag.hp+lag.ep);  
+    lag.diffh=0*lag.diffh;
+    lag.diffx=0*lag.diffx;
+    lag.diffy=0*lag.diffy;
+    lag.diffv=0*lag.diffv;
+    lag.diffz=0*lag.diffz;
+
+    lag.diffh(:,1) = lag.viscofhp(:);
+    lag.diffx(:,1) = lag.viscofhx(:);
+    lag.diffy(:,1) = lag.viscofhy(:);
+    lag.diffv(:,1) = lag.khp(:)./(lag.hp+lag.ep); 
+    lag.diffz(:,1) = lag.khz(:)./(lag.hp+lag.ep);  
 end
 
 
@@ -48,10 +56,15 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Particle position at stage n 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		lag.xpt  = lag.xp(:)  + (a_rk(ns)*time.dti).*lag.chix(:,ns-1);
-		lag.ypt  = lag.yp(:)  + (a_rk(ns)*time.dti).*lag.chiy(:,ns-1);
-		lag.sigpt  = lag.sigp(:)  + (a_rk(ns)*time.dti).*lag.chiz(:,ns-1);
-
+        if grid.diffusion
+            lag.xpt  = lag.xp(:)  + ((a_rk(ns)*time.dti).*(lag.chix(:,ns-1) + lag.diffx(:,ns-1))) + (sqrt(2*lag.diffh(:,ns-1))*lag.weiner((4*(time.iint-1))+ns));
+		    lag.ypt  = lag.yp(:)  + ((a_rk(ns)*time.dti).*(lag.chiy(:,ns-1) + lag.diffy(:,ns-1))) + (sqrt(2*lag.diffh(:,ns-1))*lag.weiner((4*(time.iint-1))+ns));
+		    lag.sigpt  = lag.sigp(:)  + ((a_rk(ns)*time.dti).*(lag.chiz(:,ns-1) + lag.diffz(:,ns-1))) + (sqrt(2*lag.diffv(:,ns-1))*lag.weiner((4*(time.iint-1))+ns));
+        else       
+            lag.xpt  = lag.xp(:)  + (a_rk(ns)*time.dti).*lag.chix(:,ns-1);
+		    lag.ypt  = lag.yp(:)  + (a_rk(ns)*time.dti).*lag.chiy(:,ns-1);
+		    lag.sigpt  = lag.sigp(:)  + (a_rk(ns)*time.dti).*lag.chiz(:,ns-1);
+        end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Adjust sigma position to stick to bottom and remail below free surface
@@ -69,6 +82,10 @@ end
 		grid.uin(grid.nele+1,:)=0;    
 		grid.vin(grid.nele+1,:)=0;
 		grid.win(grid.nele+1,:)=0;
+        if grid.diffusion
+            grid.viscofhin  = ((1-c_rk(ns))*grid.viscofh1 + c_rk(ns)*grid.viscofh2);
+		    grid.khin  = ((1-c_rk(ns))*grid.kh1 + c_rk(ns)*grid.kh2); 
+        end	
 
 
 
@@ -77,6 +94,9 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		[lag,grid]=newinterpolatev(lag,grid);
 		[lag,grid]=newinterpolateelh(lag,grid,0);
+        if grid.diffusion
+            [lag,grid]=interpolate_diffusion(lag,grid,0);
+        end	
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -89,6 +109,13 @@ end
 		lag.chix(:,ns) = lag.up(:);
 		lag.chiy(:,ns) = lag.vp(:);
 		lag.chiz(:,ns) = lag.wp(:)./(lag.hp+lag.ep);  
+        if grid.diffusion
+            lag.diffh(:,ns) = lag.viscofhp(:);
+            lag.diffx(:,ns) = lag.viscofhx(:);
+            lag.diffy(:,ns) = lag.viscofhy(:);
+            lag.diffv(:,ns) = lag.khp(:)./(lag.hp+lag.ep); 
+            lag.diffz(:,ns) = lag.khz(:)./(lag.hp+lag.ep);  
+        end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Limit vertical motion in very shallow water
@@ -105,9 +132,15 @@ end
 	lag.ypt  = lag.yp(:);
 	lag.sigpt = lag.sigp(:);
 	for ns=1:mstage
-		lag.xpt = lag.xpt + time.dti*b_rk(ns)*lag.indomain(:).*lag.chix(:,ns);
-		lag.ypt = lag.ypt + time.dti*b_rk(ns)*lag.indomain(:).*lag.chiy(:,ns);
-		lag.sigpt = lag.sigpt + time.dti*b_rk(ns)*lag.indomain(:).*lag.chiz(:,ns);
+        if grid.diffusion
+            lag.xpt = lag.xpt + (time.dti*b_rk(ns)*lag.indomain(:).*(lag.chix(:,ns) + lag.diffx(:,ns))) + (sqrt(2*lag.diffh(:,ns))*lag.weiner((4*(time.iint-1))+ns));
+		    lag.ypt = lag.ypt + (time.dti*b_rk(ns)*lag.indomain(:).*(lag.chiy(:,ns) + lag.diffy(:,ns))) + (sqrt(2*lag.diffh(:,ns))*lag.weiner((4*(time.iint-1))+ns));
+		    lag.sigpt = lag.sigpt + (time.dti*b_rk(ns)*lag.indomain(:).*(lag.chiz(:,ns) + lag.diffz(:,ns))) + (sqrt(2*lag.diffv(:,ns))*lag.weiner((4*(time.iint-1))+ns));
+        else
+		    lag.xpt = lag.xpt + time.dti*b_rk(ns)*lag.indomain(:).*lag.chix(:,ns);
+		    lag.ypt = lag.ypt + time.dti*b_rk(ns)*lag.indomain(:).*lag.chiy(:,ns);
+		    lag.sigpt = lag.sigpt + time.dti*b_rk(ns)*lag.indomain(:).*lag.chiz(:,ns);
+        end
 	end
 
 
@@ -151,6 +184,9 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
 	[lag,grid]=newinterpolatev(lag,grid);
 	[lag,grid]=newinterpolateelh(lag,grid,0);
+    if grid.diffusion
+        [lag,grid]=interpolate_diffusion(lag,grid,0);
+    end	
 
 end
 

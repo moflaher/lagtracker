@@ -56,7 +56,7 @@ function [lag,grid]=interpolate_diffusion(lag,grid,ifc)
         k2(a)=grid.siglay;
         
     a=sigpt>grid.zz(grid.siglay)&sigpt<grid.zz(1);
-        dzp=(1./grid.zz)*sigpt(a)'
+        dzp=(1./grid.zz)*sigpt(a)';
         dzp(dzp<1)=10;
         [mtemp k1(a)] = min(dzp);
         k2(a)=k1(a)+1;		  

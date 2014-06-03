@@ -20,7 +20,7 @@ end
 
 grid.vx=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'x'));
 grid.vy=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'y'));
-grid.nv=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'nv'));
+grid.nv=double(netcdf.getVar(ncid,netcdf.inqVarID(ncid,'nv')));
 grid.h=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'h'));
 grid.hele=(grid.h(grid.nv(:,1))+grid.h(grid.nv(:,2))+grid.h(grid.nv(:,1)))/3;
 temp=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'siglev'));
@@ -78,12 +78,12 @@ grid.el2=zeros(grid.node,1);
 
 if grid.diffusion
     grid.viscofhnc1 = netcdf.getVar(ncid,netcdf.inqVarID(ncid,'viscofh'),[0 0 set.start],[grid.node grid.siglay 1]);
-    grid.khnc1 = netcdf.getVar(ncid,netcdf.inqVarID(ncid,'v'),[0 0 set.start],[grid.node grid.siglev 1]);
+    grid.khnc1 = netcdf.getVar(ncid,netcdf.inqVarID(ncid,'kh'),[0 0 set.start],[grid.node grid.siglev 1]);
     grid.viscofhnc2=zeros(grid.node,grid.siglay);
     grid.khnc2=zeros(grid.node,grid.siglev);
     
-    grid.viscofhin=grid.viscofh;    
-    grid.khin=grid.kh;         
+    grid.viscofhin=grid.viscofhnc1;    
+    grid.khin=grid.khnc1;         
     
     grid.viscofh1=zeros(grid.node,grid.siglay);
     grid.kh1=zeros(grid.node,grid.siglev);
