@@ -79,9 +79,9 @@ function [grid]=triangleedgegrid(grid)
 %   Find the closest ## elements to each element and save them.              
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 stridx=find(grid.ncfile=='/');
-gridclosestname=grid.ncfile(max(stridx)+1:length(grid.ncfile)-8);
+grid.name=grid.ncfile(max(stridx)+1:length(grid.ncfile)-8);
 
-if (exist(['grid_closest/' gridclosestname '.mat'],'file')==0)
+if (exist(['grid_closest/' grid.name '.mat'],'file')==0)
     disp('Calculating closest 40 elements to each element. This will take time for large n. Scale as O(n^2*log(n)) roughly.')
 
     nbr_closest_elem = 40;
@@ -96,11 +96,11 @@ toc
     
     gridclosest=grid.closest;
     if ~exist('grid_closest','dir'), mkdir('grid_closest'); end
-    save(['grid_closest/' gridclosestname '.mat'],'gridclosest');
+    save(['grid_closest/' grid.name '.mat'],'gridclosest');
 
 else
 	disp('Loading existing file with closest element data')
-    load(['grid_closest/' gridclosestname '.mat']);
+    load(['grid_closest/' grid.name '.mat']);
     grid.closest=gridclosest;
 
 end

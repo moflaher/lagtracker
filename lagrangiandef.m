@@ -53,7 +53,7 @@ classdef lagrangiandef
         viscofhx
         viscofhy
         khz     
-        weiner
+        wiener
         diffh
         diffx
         diffy

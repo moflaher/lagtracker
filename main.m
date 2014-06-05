@@ -51,7 +51,7 @@ function [lag]=main(seti)
 % Save the grid for the first start time. To use later for plotting.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%]
     if ~exist('savedir','dir'), mkdir('savedir'); end
-   	if seti==1, save('savedir/gridname.mat','grid'); end
+   	if ~exist(['savedir/' grid.name '_grid.mat']), save(['savedir/' grid.name '_grid.mat'],'grid'); end
 
 	
 

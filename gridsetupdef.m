@@ -78,6 +78,7 @@ classdef gridsetupdef
         khin
         kh1
         kh2
+        name
 	end
 
 end
