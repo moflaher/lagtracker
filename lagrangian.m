@@ -79,7 +79,15 @@ lag.sigpt=set.sigstart;
 if set.diffusion
     lag.viscofhp=zeros(n,1);
     lag.khp=zeros(n,1);
-    lag.weiner=ones(4*(((time.trackingtime)*time.loopsperhour)+1),1);
+	if set.randomstate
+		lag.saverandomstate=rng;
+		lag.weiner=sqrt(time.dti)*randn(4*(((time.trackingtime)*time.loopsperhour)+1),1);	
+	else
+		lag.saverandomstate=set.randomstate;
+		rng(set.randomstate);
+		lag.weiner=sqrt(time.dti)*randn(4*(((time.trackingtime)*time.loopsperhour)+1),1);
+	end
+	
 end
 
 

@@ -38,9 +38,10 @@ function [lag,grid]=findfull(lag,grid,pter)
 	if length(array)<=length(idxa)
 	    for jj=1:length(array)%mainfor
 		    i=array(jj);
-            	xlag=xp(i);
+			xlag=xp(i);
 		    ylag=yp(i);
-		    radlist(1:grid.nele,1)=(grid.xc(1:grid.nele)-xlag).^2 + (grid.yc(1:grid.nele)-ylag).^2;
+		    %radlist(1:grid.nele,1)=(grid.xc(1:grid.nele)-xlag).^2 + (grid.yc(1:grid.nele)-ylag).^2;
+			radlist=(grid.xc-xlag).^2 + (grid.yc-ylag).^2;
 		    %check closest triangle
 		    [minrad mini]=min(radlist);
 		    xtri=grid.vx(grid.nv(mini,1:3))';
@@ -49,15 +50,16 @@ function [lag,grid]=findfull(lag,grid,pter)
 			    lag.ifound(i)=1; 
 			    lag.host(i)=mini;	
 		    else%if2
-			    tri=find(multitrianglechecker(grid.vx(grid.nv(:,1:3)),grid.vy(grid.nv(:,1:3)),xlag,ylag));
+			    %tri=find(multitrianglechecker(grid.vx(grid.nv(:,1:3)),grid.vy(grid.nv(:,1:3)),xlag,ylag));
+				tri=find(multitrianglechecker(grid.vx(grid.nv),grid.vy(grid.nv),xlag,ylag));
 			    if ~isempty(tri)
 		                    lag.ifound(i)=1; 
 		                    lag.host(i)=tri(1);
 		                    if length(tri)>1 
 		                        tri
 		                    end
-                        	end                
-               	 end%if2
+				end                
+            end%if2
 
 	    end%mainfor
 

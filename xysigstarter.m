@@ -75,18 +75,18 @@ elseif set.option==4
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
 		
-        %kitimat         
-        xlocu=242600-50000;
-        ylocu=310000-117000;
-        
-        %gilislandsouth         
-        xlocl=190000-10;
-        ylocl=190000-10;
+        xlocl=433000;     
+        xlocu=436000;
+        ylocl=729000;
+        ylocu=736000;       
+           
+       
+
 
 
         idx=find(grid.xc>= xlocl & grid.xc <=xlocu & grid.yc>= ylocl & grid.yc <=ylocu );
-        length(idx)
-        array=1:64;		
+        foundelements=length(idx)
+        array=1:100:foundelements;		
 
         set.xstart(:,1) = grid.xc(idx(array));
 		set.ystart(:,1)  = grid.yc(idx(array));
@@ -98,7 +98,7 @@ else
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	set.xstart  = grid.xc;
 	set.ystart = grid.yc;
-	set.sigstart(1:grid.nele,1) = 1;
+	set.sigstart(1:grid.nele,1) = zeros(1:grid.nele,1);
 	
 
 end

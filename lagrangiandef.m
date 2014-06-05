@@ -59,6 +59,7 @@ classdef lagrangiandef
         diffy
         diffv
         diffz 
+		saverandomstate
 	end
 	
 	

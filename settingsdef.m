@@ -25,6 +25,7 @@ classdef settingsdef
 		option
         check_turbines
         diffusion
+		randomstate
 	end
 	
 	
