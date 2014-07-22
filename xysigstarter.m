@@ -139,7 +139,7 @@ elseif set.option==5
 
         set.xstart(:,1) = savex;
 		set.ystart(:,1)  =  savey;
-		set.sigstart(:,1) = savesig;
+		set.zstart(:,1) = zeros(length(savesig),1)+10;
    
 else
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

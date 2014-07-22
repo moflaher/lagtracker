@@ -22,9 +22,11 @@ classdef lagrangiandef
 		inwater
 		xp
 		yp
+        zp
 		sigp
 		xpt
 		ypt
+        zpt
 		sigpt
 		up
 		vp

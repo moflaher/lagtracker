@@ -1,4 +1,4 @@
-function [lag,grid]=newinterpolatev(lag,grid) 
+function [lag,grid]=newinterpolatev(lag,grid,ifc) 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Input: lag,grid
@@ -12,9 +12,11 @@ function [lag,grid]=newinterpolatev(lag,grid)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Determine element containing point (xp,yp,sigpt)  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  	[allfound lag]=newfindquick(lag,grid);    
-  	if(allfound==0)  
-		[lag grid]=findfull(lag,grid,0);
+	if(ifc == 1)
+		[allfound,lag]=newfindquick(lag,grid);
+		if(allfound==0)
+        		[lag,grid]=findfull(lag,grid,0);
+     	end
   	end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

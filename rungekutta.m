@@ -22,7 +22,7 @@ function [lag,grid,time]=rungekutta(lag,grid,time)
 
 
 	mstage=4;
-	eps=1.0e-5;
+	eps=.01;
 	a_rk=[0,0.5,0.5,1];
 	b_rk=[1/6,1/3,1/3,1/6];
 	c_rk=[0,0.5,0.5,1]; 
@@ -35,7 +35,7 @@ lag.chiy=0*lag.chiy;
 lag.chiz=0*lag.chiz;
 lag.chix(:,1) = lag.up(:);
 lag.chiy(:,1) = lag.vp(:);
-lag.chiz(:,1) = lag.wp(:)./(lag.hp+lag.ep);  
+lag.chiz(:,1) = lag.wp(:);  
 
 if grid.diffusion
     ff=lag.savediffusionfudgefactor;
@@ -48,8 +48,8 @@ if grid.diffusion
     lag.diffh(:,1) = lag.viscofhp(:)/ff;
     lag.diffx(:,1) = lag.viscofhx(:)/ff;
     lag.diffy(:,1) = lag.viscofhy(:)/ff;
-    lag.diffv(:,1) = (lag.khp(:)./((lag.hp+lag.ep).^2))/ff; 
-    lag.diffz(:,1) = (lag.khz(:)./((lag.hp+lag.ep).^2))/ff;  
+    lag.diffv(:,1) = lag.khp(:)/ff; 
+    lag.diffz(:,1) = lag.khz(:)/ff;  
 
 
 
@@ -61,22 +61,23 @@ end
 % Particle position at stage n 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         if grid.diffusion
-            %Someone should look closely at this. Not 100% sure if the last term is being added using the scheme corretly
-            %might be fixed now divided khp and khz by (hp+ep)^2 instead of hp+ep this should make the math on the dimensions workout.
             lag.xpt  = lag.xp(:)  + ((a_rk(ns)*time.dti).*(lag.chix(:,ns-1) + lag.diffx(:,ns-1))) + (sqrt(2*lag.diffh(:,ns-1))*lag.wiener((4*(time.iint-1))+ns-1));
 		    lag.ypt  = lag.yp(:)  + ((a_rk(ns)*time.dti).*(lag.chiy(:,ns-1) + lag.diffy(:,ns-1))) + (sqrt(2*lag.diffh(:,ns-1))*lag.wiener((4*(time.iint-1))+ns-1));
-		    lag.sigpt  = lag.sigp(:)  + ((a_rk(ns)*time.dti).*(lag.chiz(:,ns-1) + lag.diffz(:,ns-1))) + (sqrt(2*lag.diffv(:,ns-1))*(lag.wiener((4*(time.iint-1))+ns-1) ));   
+		    lag.zpt  = lag.zp(:)  + ((a_rk(ns)*time.dti).*(lag.chiz(:,ns-1) + lag.diffz(:,ns-1))) + (sqrt(2*lag.diffv(:,ns-1))*lag.wiener((4*(time.iint-1))+ns-1));   
         else       
             lag.xpt  = lag.xp(:)  + (a_rk(ns)*time.dti).*lag.chix(:,ns-1);
 		    lag.ypt  = lag.yp(:)  + (a_rk(ns)*time.dti).*lag.chiy(:,ns-1);
-		    lag.sigpt  = lag.sigp(:)  + (a_rk(ns)*time.dti).*lag.chiz(:,ns-1);
+		    lag.zpt  = lag.zp(:)  + (a_rk(ns)*time.dti).*lag.chiz(:,ns-1);
         end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Adjust sigma position to stick to bottom and remail below free surface
+% Adjust z position to stick to bottom and remail below free surface
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		lag.sigpt = max(lag.sigpt,-1);
-		lag.sigpt = min(lag.sigpt,0);
+		[lag,grid]=newinterpolateelh(lag,grid,1);
+		lag.zpt = min(lag.zpt,lag.ep);
+		lag.zpt = max(lag.zpt,-lag.hp);
+
+        lag.sigpt=lag.zpt(:)./(-1*(lag.hp+lag.ep));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Calculate velocity field for stage n using c_rk coefficients
@@ -96,7 +97,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Evaluate velocity (u,v,w,el,h,dedtin) at stage ns particle position
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		[lag,grid]=newinterpolatev(lag,grid);
+		[lag,grid]=newinterpolatev(lag,grid,0);
 		[lag,grid]=newinterpolateelh(lag,grid,0);
         if grid.diffusion
             [lag,grid]=interpolate_diffusion(lag,grid,0);
@@ -112,13 +113,13 @@ end
  
 		lag.chix(:,ns) = lag.up(:);
 		lag.chiy(:,ns) = lag.vp(:);
-		lag.chiz(:,ns) = lag.wp(:)./(lag.hp+lag.ep);  
+		lag.chiz(:,ns) = lag.wp(:);  
         if grid.diffusion
             lag.diffh(:,ns) = lag.viscofhp(:)/ff;
             lag.diffx(:,ns) = lag.viscofhx(:)/ff;
             lag.diffy(:,ns) = lag.viscofhy(:)/ff;
-            lag.diffv(:,ns) = (lag.khp(:)./((lag.hp+lag.ep).^2))/ff; 
-            lag.diffz(:,ns) = (lag.khz(:)./((lag.hp+lag.ep).^2))/ff;  
+            lag.diffv(:,ns) = lag.khp(:)/ff; 
+            lag.diffz(:,ns) = lag.khz(:)/ff;  
         end
 
 
@@ -135,16 +136,16 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	lag.xpt  = lag.xp(:);
 	lag.ypt  = lag.yp(:);
-	lag.sigpt = lag.sigp(:);
+	lag.zpt  = lag.zp(:);
 	for ns=1:mstage
         if grid.diffusion
             lag.xpt = lag.xpt + (time.dti*b_rk(ns)*lag.indomain(:).*(lag.chix(:,ns) + lag.diffx(:,ns))) + lag.indomain(:).*(sqrt(2*lag.diffh(:,ns))*lag.wiener((4*(time.iint-1))+ns));
 		    lag.ypt = lag.ypt + (time.dti*b_rk(ns)*lag.indomain(:).*(lag.chiy(:,ns) + lag.diffy(:,ns))) + lag.indomain(:).*(sqrt(2*lag.diffh(:,ns))*lag.wiener((4*(time.iint-1))+ns));
-		    lag.sigpt = lag.sigpt + (time.dti*b_rk(ns)*lag.indomain(:).*(lag.chiz(:,ns) + lag.diffz(:,ns))) + lag.indomain(:).*(sqrt(2*lag.diffv(:,ns))*(lag.wiener((4*(time.iint-1))+ns) ));
+		    lag.zpt = lag.zpt + (time.dti*b_rk(ns)*lag.indomain(:).*(lag.chiz(:,ns) + lag.diffz(:,ns))) + lag.indomain(:).*(sqrt(2*lag.diffv(:,ns))*lag.wiener((4*(time.iint-1))+ns));
         else
 		    lag.xpt = lag.xpt + time.dti*b_rk(ns)*lag.indomain(:).*lag.chix(:,ns);
 		    lag.ypt = lag.ypt + time.dti*b_rk(ns)*lag.indomain(:).*lag.chiy(:,ns);
-		    lag.sigpt = lag.sigpt + time.dti*b_rk(ns)*lag.indomain(:).*lag.chiz(:,ns);
+		    lag.zpt = lag.zpt + time.dti*b_rk(ns)*lag.indomain(:).*lag.chiz(:,ns);
         end
 	end
 
@@ -171,7 +172,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
 			lag.xp  = lag.xp.*(1-lag.inwater)+lag.xpt.*lag.inwater;
 			lag.yp  = lag.yp.*(1-lag.inwater)+lag.ypt.*lag.inwater;
-			lag.sigp  = lag.sigp.*(1-lag.inwater)+lag.sigpt.*lag.inwater;
+			lag.zp  = lag.zp.*(1-lag.inwater)+lag.zpt.*lag.inwater;
 			lag.xpt  = lag.xp;
 			lag.ypt  = lag.yp;
             
@@ -179,15 +180,16 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Adjust depth of updated particle positions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
-	lag.sigp = max(lag.sigp(:),-1);	%stick to bottom
-  	lag.sigp = min(lag.sigp(:),0);	%dont pierce free surface
-	lag.sigpt  = lag.sigp;
+    lag.zp = min(lag.zp,lag.ep); %dont pierce free surface
+    lag.zp = max(lag.zp,-lag.hp); %stick to bottom
+	lag.zpt  = lag.zp;
 
+    lag.sigpt=lag.zpt(:)./(-1*(lag.hp+lag.ep));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Evaluate velocity (u,v,w,el,h,dedtin) at updated particle position
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
-	[lag,grid]=newinterpolatev(lag,grid);
+	[lag,grid]=newinterpolatev(lag,grid,1);
 	[lag,grid]=newinterpolateelh(lag,grid,0);
     if grid.diffusion
         [lag,grid]=interpolate_diffusion(lag,grid,0);

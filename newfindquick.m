@@ -48,8 +48,6 @@ function [allfound,lag]=newfindquick(lag,grid)
         lag.host(a2(a3))=ibe(a3);
     end
     allfound=(sum(lag.ifound) == sum(lag.indomain));
-%     a=grid.isonb(grid.nv(lag.host,1))==1 | grid.isonb(grid.nv(lag.host,2))==1 | grid.isonb(grid.nv(lag.host,3))==1;
-%     lag.sbound(a)=1;
 end
 
 

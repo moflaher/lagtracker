@@ -49,9 +49,11 @@ lag.chiy=zeros(n,4);
 lag.chiz=zeros(n,4);
 lag.xp=zeros(n,1);
 lag.yp=zeros(n,1);
+lag.zp=zeros(n,1);
 lag.sigp=zeros(n,1);
 lag.xpt=zeros(n,1);
 lag.ypt=zeros(n,1);
+lag.zpt=zeros(n,1);
 lag.sigpt=zeros(n,1);
 lag.up=zeros(n,1);
 lag.vp=zeros(n,1);
@@ -73,7 +75,8 @@ lag.check_turbine_intersect=set.check_turbines;
 
 lag.xpt=set.xstart;
 lag.ypt=set.ystart;
-lag.sigpt=set.sigstart;
+lag.zpt=set.zstart;
+%lag.sigpt=set.sigstart;
 
 
 

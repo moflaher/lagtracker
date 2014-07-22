@@ -9,7 +9,7 @@ function [lag,grid,time]=setlag(lag,grid,time)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     lag.xp = lag.xpt(:);
 	lag.yp = lag.ypt(:);
-	lag.sigp  = lag.sigpt(:);    
+	lag.zp = lag.zpt(:);    
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -26,8 +26,19 @@ function [lag,grid,time]=setlag(lag,grid,time)
 	time.itout=1;
 	lag.x(:,time.itout)=lag.xpt(:)+ grid.vxmin;
 	lag.y(:,time.itout)=lag.ypt(:)+ grid.vymin;
+    
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Adjust z position to stick to bottom and remail below free surface
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	[lag,grid]=newinterpolateelh(lag,grid,1);
+	lag.zpt = min(lag.zpt,lag.ep);
+	lag.zpt = max(lag.zpt,-lag.hp);
+    lag.z(:,time.itout)=lag.zpt(:);
+    lag.sigpt=lag.zpt(:)./(-1*(lag.hp+lag.ep));
 	lag.sig(:,time.itout)=lag.sigpt(:);
-    [lag,grid]=newinterpolatev(lag,grid);
+
+    [lag,grid]=newinterpolatev(lag,grid,0);
     [lag,grid]=newinterpolateelh(lag,grid,0);
     if grid.diffusion
         [lag,grid]=interpolate_diffusion(lag,grid,0);
@@ -35,7 +46,7 @@ function [lag,grid,time]=setlag(lag,grid,time)
 	lag.u(:,time.itout)=lag.up;
 	lag.v(:,time.itout)=lag.vp;
 	lag.w(:,time.itout)=lag.wp;
-	lag.z(:,time.itout)=lag.sigpt.*(lag.ep+lag.hp)+lag.ep;
+	%lag.z(:,time.itout)=lag.sigpt.*(lag.ep+lag.hp)+lag.ep;
 	lag.time(time.itout)=time.starthour*time.instp;
     %lag.turbine_intersects=zeros(grid.nele,grid.nturbines);
     %lag.turbine_sigma=zeros(grid.nturbines,1);

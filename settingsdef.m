@@ -19,6 +19,7 @@ classdef settingsdef
 		outputstep
 		xstart
 		ystart
+        zstart
 		sigstart
 		swimspeed
 		starter
