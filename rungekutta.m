@@ -38,17 +38,21 @@ lag.chiy(:,1) = lag.vp(:);
 lag.chiz(:,1) = lag.wp(:)./(lag.hp+lag.ep);  
 
 if grid.diffusion
+    ff=lag.savediffusionfudgefactor;
     lag.diffh=0*lag.diffh;
     lag.diffx=0*lag.diffx;
     lag.diffy=0*lag.diffy;
     lag.diffv=0*lag.diffv;
     lag.diffz=0*lag.diffz;
 
-    lag.diffh(:,1) = lag.viscofhp(:);
-    lag.diffx(:,1) = lag.viscofhx(:);
-    lag.diffy(:,1) = lag.viscofhy(:);
-    lag.diffv(:,1) = lag.khp(:)./(lag.hp+lag.ep); 
-    lag.diffz(:,1) = lag.khz(:)./(lag.hp+lag.ep);  
+    lag.diffh(:,1) = lag.viscofhp(:)/ff;
+    lag.diffx(:,1) = lag.viscofhx(:)/ff;
+    lag.diffy(:,1) = lag.viscofhy(:)/ff;
+    lag.diffv(:,1) = (lag.khp(:)./((lag.hp+lag.ep).^2))/ff; 
+    lag.diffz(:,1) = (lag.khz(:)./((lag.hp+lag.ep).^2))/ff;  
+
+
+
 end
 
 
@@ -57,9 +61,11 @@ end
 % Particle position at stage n 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         if grid.diffusion
+            %Someone should look closely at this. Not 100% sure if the last term is being added using the scheme corretly
+            %might be fixed now divided khp and khz by (hp+ep)^2 instead of hp+ep this should make the math on the dimensions workout.
             lag.xpt  = lag.xp(:)  + ((a_rk(ns)*time.dti).*(lag.chix(:,ns-1) + lag.diffx(:,ns-1))) + (sqrt(2*lag.diffh(:,ns-1))*lag.wiener((4*(time.iint-1))+ns-1));
 		    lag.ypt  = lag.yp(:)  + ((a_rk(ns)*time.dti).*(lag.chiy(:,ns-1) + lag.diffy(:,ns-1))) + (sqrt(2*lag.diffh(:,ns-1))*lag.wiener((4*(time.iint-1))+ns-1));
-		    lag.sigpt  = lag.sigp(:)  + ((a_rk(ns)*time.dti).*(lag.chiz(:,ns-1) + lag.diffz(:,ns-1))) + (sqrt(2*lag.diffv(:,ns-1))*lag.wiener((4*(time.iint-1))+ns-1));
+		    lag.sigpt  = lag.sigp(:)  + ((a_rk(ns)*time.dti).*(lag.chiz(:,ns-1) + lag.diffz(:,ns-1))) + (sqrt(2*lag.diffv(:,ns-1))*(lag.wiener((4*(time.iint-1))+ns-1) ));   
         else       
             lag.xpt  = lag.xp(:)  + (a_rk(ns)*time.dti).*lag.chix(:,ns-1);
 		    lag.ypt  = lag.yp(:)  + (a_rk(ns)*time.dti).*lag.chiy(:,ns-1);
@@ -85,7 +91,7 @@ end
 		    grid.khin  = ((1-c_rk(ns))*grid.kh1 + c_rk(ns)*grid.kh2); 
         end	
 
-
+        
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Evaluate velocity (u,v,w,el,h,dedtin) at stage ns particle position
@@ -108,12 +114,13 @@ end
 		lag.chiy(:,ns) = lag.vp(:);
 		lag.chiz(:,ns) = lag.wp(:)./(lag.hp+lag.ep);  
         if grid.diffusion
-            lag.diffh(:,ns) = lag.viscofhp(:);
-            lag.diffx(:,ns) = lag.viscofhx(:);
-            lag.diffy(:,ns) = lag.viscofhy(:);
-            lag.diffv(:,ns) = lag.khp(:)./(lag.hp+lag.ep); 
-            lag.diffz(:,ns) = lag.khz(:)./(lag.hp+lag.ep);  
+            lag.diffh(:,ns) = lag.viscofhp(:)/ff;
+            lag.diffx(:,ns) = lag.viscofhx(:)/ff;
+            lag.diffy(:,ns) = lag.viscofhy(:)/ff;
+            lag.diffv(:,ns) = (lag.khp(:)./((lag.hp+lag.ep).^2))/ff; 
+            lag.diffz(:,ns) = (lag.khz(:)./((lag.hp+lag.ep).^2))/ff;  
         end
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Limit vertical motion in very shallow water
@@ -131,9 +138,9 @@ end
 	lag.sigpt = lag.sigp(:);
 	for ns=1:mstage
         if grid.diffusion
-            lag.xpt = lag.xpt + (time.dti*b_rk(ns)*lag.indomain(:).*(lag.chix(:,ns) + lag.diffx(:,ns))) + (sqrt(2*lag.diffh(:,ns))*lag.wiener((4*(time.iint-1))+ns));
-		    lag.ypt = lag.ypt + (time.dti*b_rk(ns)*lag.indomain(:).*(lag.chiy(:,ns) + lag.diffy(:,ns))) + (sqrt(2*lag.diffh(:,ns))*lag.wiener((4*(time.iint-1))+ns));
-		    lag.sigpt = lag.sigpt + (time.dti*b_rk(ns)*lag.indomain(:).*(lag.chiz(:,ns) + lag.diffz(:,ns))) + (sqrt(2*lag.diffv(:,ns))*lag.wiener((4*(time.iint-1))+ns));
+            lag.xpt = lag.xpt + (time.dti*b_rk(ns)*lag.indomain(:).*(lag.chix(:,ns) + lag.diffx(:,ns))) + lag.indomain(:).*(sqrt(2*lag.diffh(:,ns))*lag.wiener((4*(time.iint-1))+ns));
+		    lag.ypt = lag.ypt + (time.dti*b_rk(ns)*lag.indomain(:).*(lag.chiy(:,ns) + lag.diffy(:,ns))) + lag.indomain(:).*(sqrt(2*lag.diffh(:,ns))*lag.wiener((4*(time.iint-1))+ns));
+		    lag.sigpt = lag.sigpt + (time.dti*b_rk(ns)*lag.indomain(:).*(lag.chiz(:,ns) + lag.diffz(:,ns))) + lag.indomain(:).*(sqrt(2*lag.diffv(:,ns))*(lag.wiener((4*(time.iint-1))+ns) ));
         else
 		    lag.xpt = lag.xpt + time.dti*b_rk(ns)*lag.indomain(:).*lag.chix(:,ns);
 		    lag.ypt = lag.ypt + time.dti*b_rk(ns)*lag.indomain(:).*lag.chiy(:,ns);

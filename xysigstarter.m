@@ -95,6 +95,52 @@ elseif set.option==4
 		set.ystart(:,1)  = grid.yc(idx(array));
 		set.sigstart(:,1) = ones(length(idx(array)),1)*-0.0001;
    
+elseif set.option==5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Start particles at elements in mat-file
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+    if ~exist('cage_elements_sfm6_musq2_locations.mat')
+       load('cage_elements_sfm6_musq2.mat')
+
+        savex=[];
+        savey=[];
+        savesig=[];
+
+        pp=5;
+        xbox_size=200;
+	    ybox_size=200;
+	    num_parts=pp*100;
+        for i=1:length(cage_elements)
+
+		    xs=(rand(num_parts,1)-0.5)*xbox_size;
+		    ys=(rand(num_parts,1)-0.5)*ybox_size;
+		    sigs= -1.*rand(num_parts,1);
+            sigs=sigs(sigs>=-1 & sigs<=0);
+	        xs=grid.xc(cage_elements(i))+xs;
+		    ys=grid.yc(cage_elements(i))+ys;
+		    host=inpolygon(xs,ys,grid.vx(grid.nv(cage_elements(i),:)),grid.vy(grid.nv(cage_elements(i),:)));
+            
+            xs=xs(host);
+            ys=ys(host);
+            sigs=sigs(host);
+            savex=[savex; xs(1:pp)];
+            savey=[savey; ys(1:pp)]; 
+            savesig=[savesig; sigs(1:pp)];         
+
+        end  	
+        save('cage_elements_sfm6_musq2_locations.mat','savex','savey','savesig')
+
+      else
+        display('Loading particle start location data.')
+        load('cage_elements_sfm6_musq2_locations.mat')
+      end
+
+
+        set.xstart(:,1) = savex;
+		set.ystart(:,1)  =  savey;
+		set.sigstart(:,1) = savesig;
+   
 else
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Start particles at elements centers for entire grid

@@ -60,6 +60,7 @@ classdef lagrangiandef
         diffv
         diffz 
 		saverandomstate
+        savediffusionfudgefactor
 	end
 	
 	

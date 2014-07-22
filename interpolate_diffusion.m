@@ -36,6 +36,8 @@ function [lag,grid]=interpolate_diffusion(lag,grid,ifc)
 	x0c=lag.xpt(array)-grid.xc(host);
 	y0c=lag.ypt(array)-grid.yc(host);
     e=grid.nv(host,:);
+
+
   
     
     zf1=0*host;
@@ -84,11 +86,11 @@ function [lag,grid]=interpolate_diffusion(lag,grid,ifc)
         zf1(a)=1;
         zf2(a)=0;
         k1(a)=1;
-        k2(a)=1;
+        k2(a)=1+1;
     a=sigpt==grid.z(grid.siglev);
         zf1(a)=0;
         zf2(a)=1;
-        k1(a)=grid.siglev;
+        k1(a)=grid.siglev-1;
         k2(a)=grid.siglev;
 
     a=sigpt<grid.z(1) & sigpt>grid.z(grid.siglev);
@@ -113,14 +115,12 @@ function [lag,grid]=interpolate_diffusion(lag,grid,ifc)
 		khe02 = kh0 + khx.*x0c + khy.*y0c;
 
         lag.khp(array)= khe01.*zf1 + khe02.*zf2;
-    
+  
+        
         leveldiff=grid.hele(host).*grid.z(k2)-grid.hele(host).*grid.z(k1);
+        lag.khz(array)= (khe02-khe01)./leveldiff;
+        
 
-        if k1==k2
-            lag.khz(array)=khe01;
-        else
-            lag.khz(array)= (khe01-khe02)./leveldiff;
-        end
 
     %Apply a noslip boundary at the bottom, setting all diffusion to zero if the particle is at the bottom
 	lag.viscofhp(lag.sigpt==-1)=0; 

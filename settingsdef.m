@@ -26,6 +26,7 @@ classdef settingsdef
         check_turbines
         diffusion
 		randomstate
+        diffusionfudgefactor
 	end
 	
 	

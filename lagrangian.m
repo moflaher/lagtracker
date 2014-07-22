@@ -76,7 +76,10 @@ lag.ypt=set.ystart;
 lag.sigpt=set.sigstart;
 
 
+
+
 if set.diffusion
+    lag.savediffusionfudgefactor=set.diffusionfudgefactor;
     lag.viscofhp=zeros(n,1);
     lag.khp=zeros(n,1);
 	if set.randomstate

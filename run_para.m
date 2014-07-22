@@ -6,8 +6,9 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+start_times=12
 
-matlabpool open 6
+matlabpool open 3
 	parfor starti=1:start_times
 		starti
         pause(starti)
