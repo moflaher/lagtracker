@@ -23,11 +23,11 @@ function [lag,grid]=findfull(lag,grid,pter)
     end
 
     	array=find(lag.ifound ==0 & lag.indomain~=0);
-        thost=nan(length(xp),1);
-        idxa=find(grid.vx>= min(min(xp)) &grid.vx<= max(max(xp)) &grid.vy>= min(min(yp)) &grid.vy<= max(max(yp)));
-        idxa=ismember(grid.nv,idxa);
-        uvidx2=1:length(idxa);
-        idxa=uvidx2(logical(sum(idxa')));
+        %thost=nan(length(xp),1);
+        %idxa=find(grid.vx>= min(min(xp)) &grid.vx<= max(max(xp)) &grid.vy>= min(min(yp)) &grid.vy<= max(max(yp)));
+        %idxa=ismember(grid.nv,idxa);
+        %uvidx2=1:length(idxa);
+        %idxa=uvidx2(logical(sum(idxa')));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Two methods for finding host.
@@ -35,13 +35,13 @@ function [lag,grid]=findfull(lag,grid,pter)
 %    Second is based on finding which particles are in each host.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	if length(array)<=length(idxa)
+	%if length(array)<=length(idxa)
 	    for jj=1:length(array)%mainfor
 		    i=array(jj);
 			xlag=xp(i);
 		    ylag=yp(i);
-		    %radlist(1:grid.nele,1)=(grid.xc(1:grid.nele)-xlag).^2 + (grid.yc(1:grid.nele)-ylag).^2;
-			radlist=(grid.xc-xlag).^2 + (grid.yc-ylag).^2;
+		    radlist(1:grid.nele,1)=(grid.xc(1:grid.nele)-xlag).^2 + (grid.yc(1:grid.nele)-ylag).^2;
+			%radlist=(grid.xc-xlag).^2 + (grid.yc-ylag).^2;
 		    %check closest triangle
 		    [minrad mini]=min(radlist);
 		    xtri=grid.vx(grid.nv(mini,1:3))';
@@ -58,34 +58,37 @@ function [lag,grid]=findfull(lag,grid,pter)
 		                    if length(tri)>1 
 		                        tri
 		                    end
+                %else
+                %'no find' 
+                %i
 				end                
             end%if2
 
 	    end%mainfor
-
+        sum(lag.ifound)/length(lag.ifound)
 	    lag.indomain=0*lag.indomain;
 	    lag.indomain(lag.ifound == 1)=1;
 	    lag.inwater=0*lag.inwater;
 	    lag.inwater(lag.ifound == 1 & lag.sbound == 0)=1;
-    else
-        thost=nan(length(xp),1);
-        idxa=find(grid.vx>= min(min(xp)) &grid.vx<= max(max(xp)) &grid.vy>= min(min(yp)) &grid.vy<= max(max(yp)));
-        idxa=ismember(grid.nv,idxa);
-        uvidx2=1:length(idxa);
-        idxa=uvidx2(logical(sum(idxa')));
+    %else
+    %    thost=nan(length(xp),1);
+    %    idxa=find(grid.vx>= min(min(xp)) &grid.vx<= max(max(xp)) &grid.vy>= min(min(yp)) &grid.vy<= max(max(yp)));
+    %    idxa=ismember(grid.nv,idxa);
+    %    uvidx2=1:length(idxa);
+     %   idxa=uvidx2(logical(sum(idxa')));
 
-        for i=1:length(idxa)
-            thost(inpolygon(xp,yp,grid.vx(grid.nv(idxa(i),1:3)),grid.vy(grid.nv(idxa(i),1:3))))=idxa(i);   
-        end    
+    %    for i=1:length(idxa)
+   %         thost(inpolygon(xp,yp,grid.vx(grid.nv(idxa(i),1:3)),grid.vy(grid.nv(idxa(i),1:3))))=idxa(i);   
+   %     end    
 
-        lag.ifound(~isnan(thost))=1;
-        lag.host(~isnan(thost))=thost(~isnan(thost));
+   %     lag.ifound(~isnan(thost))=1;
+   %     lag.host(~isnan(thost))=thost(~isnan(thost));
 
-	    lag.indomain=0*lag.indomain;
-	    lag.indomain(lag.ifound == 1)=1;
-	    lag.inwater=0*lag.inwater;
-	    lag.inwater(lag.ifound == 1 & lag.sbound == 0)=1;
+	%    lag.indomain=0*lag.indomain;
+	%    lag.indomain(lag.ifound == 1)=1;
+	%    lag.inwater=0*lag.inwater;
+	%    lag.inwater(lag.ifound == 1 & lag.sbound == 0)=1;
 
-    end
+   % end
 
 end

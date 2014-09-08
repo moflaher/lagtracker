@@ -71,6 +71,7 @@ lag.z=zeros(n,time.outt);
 lag.u=zeros(n,time.outt);
 lag.v=zeros(n,time.outt);
 lag.w=zeros(n,time.outt);
+lag.h=zeros(n,time.outt);
 lag.check_turbine_intersect=set.check_turbines;
 
 lag.xpt=set.xstart;

@@ -37,6 +37,7 @@ function [lag,grid,time]=setlag(lag,grid,time)
     lag.z(:,time.itout)=lag.zpt(:);
     lag.sigpt=lag.zpt(:)./(-1*(lag.hp+lag.ep));
 	lag.sig(:,time.itout)=lag.sigpt(:);
+    lag.h=lag.hp;
 
     [lag,grid]=newinterpolatev(lag,grid,0);
     [lag,grid]=newinterpolateelh(lag,grid,0);

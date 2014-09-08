@@ -85,6 +85,7 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
 				    lag.u(array,time.itout)=lag.up(array);
                		lag.v(array,time.itout)=lag.vp(array);
 				    lag.w(array,time.itout)=lag.wp(array);
+                    lag.h(array,time.itout)=lag.hp(array);
                     array=lag.indomain==0;
                     lag.x(array,time.itout)=NaN;
                		lag.y(array,time.itout)=NaN;
@@ -93,6 +94,7 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
 				    lag.u(array,time.itout)=0;
                		lag.v(array,time.itout)=0;
 				    lag.w(array,time.itout)=0;
+                    lag.h(array,time.itout)=NaN;
 				    lag.time(time.itout)=(time.iint*time.dti)+(time.starthour*time.instp);
         		end%if3
 
