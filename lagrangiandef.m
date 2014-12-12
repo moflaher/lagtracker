@@ -45,7 +45,7 @@ classdef lagrangiandef
 		chiy
 		chiz	
 		w_swimspeed
-		omega_swimspeed
+		input_swimspeed
         turbine_intersects
         turbine_sigma
         check_turbine_intersect

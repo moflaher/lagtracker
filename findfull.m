@@ -35,7 +35,7 @@ function [lag,grid]=findfull(lag,grid,pter)
 %    Second is based on finding which particles are in each host.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	if length(array)<=length(idxa)
+	if true%length(array)<=length(idxa)
 	    for jj=1:length(array)%mainfor
 		    i=array(jj);
 			xlag=xp(i);

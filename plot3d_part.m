@@ -13,13 +13,13 @@ end
 
 
 
-
+[a b]=size(thislag.x);
 
 figure
 
 subplot(2,2,1)
 hold on
-for i=1:spacing:length(thislag.x)
+for i=1:spacing:a
 plot3(thislag.x(i,:),thislag.y(i,:),thislag.z(i,:),'r')
 plot3(thislag.x(i,:),thislag.y(i,:),thislag.z(i,:),'.g')
 plot3(thislag.x(i,1),thislag.y(i,1),thislag.z(i,1),'.k')
@@ -34,7 +34,7 @@ view(45,25)
 subplot(2,2,2)
 
 hold on
-for i=1:spacing:length(thislag.x)
+for i=1:spacing:a
 plot(thislag.x(i,:),thislag.y(i,:),'r')
 plot(thislag.x(i,:),thislag.y(i,:),'.g')
 plot(thislag.x(i,1),thislag.y(i,1),'.k')
@@ -47,7 +47,7 @@ end
 subplot(2,2,3)
 
 hold on
-for i=1:spacing:length(thislag.x)
+for i=1:spacing:a
 plot(thislag.x(i,:),thislag.z(i,:),'r')
 plot(thislag.x(i,:),thislag.z(i,:),'.g')
 plot(thislag.x(i,1),thislag.z(i,1),'.k')
@@ -60,7 +60,7 @@ end
 subplot(2,2,4)
 
 hold on
-for i=1:spacing:length(thislag.x)
+for i=1:spacing:a
 plot(thislag.y(i,:),thislag.z(i,:),'r')
 plot(thislag.y(i,:),thislag.z(i,:),'.g')
 plot(thislag.y(i,1),thislag.z(i,1),'.k')

@@ -80,37 +80,41 @@ elseif set.option==4
         %ylocl=729000;
         %ylocu=736000;       
            
-        xlocl=200000;     
-        xlocu=250000;
-        ylocl=200000;
-        ylocu=250000; 
+
+        %model xy gets converted to lagtracker xy
+        xlocl=-405525.84375;     
+        xlocu=138350.4375;
+        ylocl=-519105.15625;
+        ylocu=-151528.140625; 
 
 
-
-        idx=find(grid.xc>= xlocl & grid.xc <=xlocu & grid.yc>= ylocl & grid.yc <=ylocu );
+        idx=find(grid.xc>= xlocl-grid.vxmin & grid.xc <=xlocu-grid.vxmin & grid.yc>= ylocl-grid.vymin & grid.yc <=ylocu-grid.vymin );
         foundelements=length(idx)
-        array=1:100:foundelements;		
+        array=1:1:foundelements;		
 
         set.xstart(:,1) = grid.xc(idx(array));
 		set.ystart(:,1)  = grid.yc(idx(array));
-		set.sigstart(:,1) = ones(length(idx(array)),1)*-0.0001;
+		set.zstart(:,1) = zeros(length(idx(array)),1);
    
 elseif set.option==5
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Start particles at elements in mat-file
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
-    if ~exist('cage_elements_sfm6_musq2_locations.mat')
-       load('cage_elements_sfm6_musq2.mat')
+    elementfile='element_starts/element_77567.mat'
+    locationfile='element_starts/element_77567_locations_1000pp.mat'
+
+    if ~exist(locationfile)
+       load(elementfile)
 
         savex=[];
         savey=[];
         savesig=[];
 
-        pp=5;
-        xbox_size=200;
-	    ybox_size=200;
-	    num_parts=pp*100;
+        pp=1000;
+        xbox_size=1000;
+	    ybox_size=1000;
+	    num_parts=pp*1000;
         for i=1:length(cage_elements)
 
 		    xs=(rand(num_parts,1)-0.5)*xbox_size;
@@ -129,17 +133,17 @@ elseif set.option==5
             savesig=[savesig; sigs(1:pp)];         
 
         end  	
-        save('cage_elements_sfm6_musq2_locations.mat','savex','savey','savesig')
+        save(locationfile,'savex','savey','savesig')
 
       else
         display('Loading particle start location data.')
-        load('cage_elements_sfm6_musq2_locations.mat')
+        load(locationfile)
       end
 
 
         set.xstart(:,1) = savex;
 		set.ystart(:,1)  =  savey;
-		set.zstart(:,1) = zeros(length(savesig),1)+10;
+		set.zstart(:,1) = zeros(length(savesig),1);
    
 else
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -147,7 +151,7 @@ else
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	set.xstart  = grid.xc;
 	set.ystart = grid.yc;
-	set.sigstart(1:grid.nele,1) = zeros(1:grid.nele,1);
+	set.zstart(1:grid.nele,1) = zeros(1:grid.nele,1);
 	
 
 end

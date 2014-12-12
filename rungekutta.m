@@ -105,11 +105,10 @@ end
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Evaluate swimspeed, this is probably the wrong location for this which makes the units wrong...
-% I think this should be change to be on line 39 with lag.chiz so that the velocity is only added once and in terms of m/s instead of d sig/ dt
+% Evaluate swimspeed (let the calculate_swinspeed function in incase it becomes more complex later)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		[lag]=calculate_swimspeed(lag);
-        lag.wp=lag.wp+lag.omega_swimspeed;
+        lag.wp=lag.wp+lag.w_swimspeed;
  
 		lag.chix(:,ns) = lag.up(:);
 		lag.chiy(:,ns) = lag.vp(:);
