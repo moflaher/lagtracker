@@ -101,8 +101,8 @@ elseif set.option==5
 % Start particles at elements in mat-file
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
-    elementfile='element_starts/element_77567.mat'
-    locationfile='element_starts/element_77567_locations_1000pp.mat'
+    elementfile='element_starts/cage_elements_sfm6_musq2.mat'
+    locationfile='element_starts/cage_elements_sfm6_musq2_locations_10pp.mat'
 
     if ~exist(locationfile)
        load(elementfile)
@@ -111,9 +111,9 @@ elseif set.option==5
         savey=[];
         savesig=[];
 
-        pp=1000;
-        xbox_size=1000;
-	    ybox_size=1000;
+        pp=10;
+        xbox_size=300;
+	    ybox_size=300;
 	    num_parts=pp*1000;
         for i=1:length(cage_elements)
 
@@ -133,7 +133,7 @@ elseif set.option==5
             savesig=[savesig; sigs(1:pp)];         
 
         end  	
-        save(locationfile,'savex','savey','savesig')
+        save(locationfile,'savex','savey')
 
       else
         display('Loading particle start location data.')
@@ -143,7 +143,7 @@ elseif set.option==5
 
         set.xstart(:,1) = savex;
 		set.ystart(:,1)  =  savey;
-		set.zstart(:,1) = zeros(length(savesig),1);
+		set.zstart(:,1) = zeros(length(savex),1);
    
 else
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

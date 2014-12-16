@@ -51,7 +51,13 @@ function [lag,grid]=newinterpolatev(lag,grid,ifc)
     a=sigpt>grid.zz(grid.siglay)&sigpt<grid.zz(1);
 %         dzp=grid.zz*ones(size(sigpt(a)'))-ones(size(grid.zz))*sigpt(a)';
 %         dzp(dzp<0)=1;
-        dzp=(1./grid.zz)*sigpt(a)';
+
+        if length(a)==1
+            dzp=(1./grid.zz)*sigpt;    
+        else
+            dzp=(1./grid.zz)*sigpt(a)';
+        end
+
         dzp(dzp<1)=10;
         [mtemp k1(a)] = min(dzp);
         k2(a)=k1(a)+1;		  

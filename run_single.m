@@ -10,11 +10,11 @@
 start_times=12;
 
 %single cpu 
-	for starti=0:3:12
+	for starti=0
 		starti
         clear savelag
         savelag=main(starti);
         savelag=struct(savelag)
-        save(['savedir/kit4_kelp_20m_0.018/element_77567_s' num2str(starti) '.mat'],'savelag','-v7.3');
+        save(['savedir/sfm6_musq2_no_cages/cage_elements_s' num2str(starti) '_sink_1mm.mat'],'savelag','-v7.3');
 	end
 

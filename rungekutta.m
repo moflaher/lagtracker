@@ -75,6 +75,11 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		[lag,grid]=newinterpolateelh(lag,grid,1);
 		lag.zpt = min(lag.zpt,lag.ep);
+        
+        %if particle is within 1 cm of bottom stop movement
+        cutoff=.01;
+        lag.inwater=((lag.zpt+lag.hp)>cutoff);
+
 		lag.zpt = max(lag.zpt,-lag.hp);
 
         lag.sigpt=lag.zpt(:)./(-1*(lag.hp+lag.ep));

@@ -8,7 +8,7 @@ function [lag]=calculate_swimspeed(lag)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   
-
+    %divide by 4 for runge-kutta
     lag.w_swimspeed =lag.input_swimspeed/4;
 
    

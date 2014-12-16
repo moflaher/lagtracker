@@ -22,7 +22,7 @@ function [lag,grid]=findfull(lag,grid,pter)
 		yp=lag.yp;
     end
 
-    	array=find(lag.ifound ==0 & lag.indomain~=0);
+    	array=find(lag.ifound ==0 & lag.indomain~=0 & lag.inwater~=0);
         thost=nan(length(xp),1);
         idxa=find(grid.vx>= min(min(xp)) &grid.vx<= max(max(xp)) &grid.vy>= min(min(yp)) &grid.vy<= max(max(yp)));
         idxa=ismember(grid.nv,idxa);
@@ -69,7 +69,7 @@ function [lag,grid]=findfull(lag,grid,pter)
 	    lag.indomain=0*lag.indomain;
 	    lag.indomain(lag.ifound == 1)=1;
 	    lag.inwater=0*lag.inwater;
-	    lag.inwater(lag.ifound == 1 & lag.sbound == 0)=1;
+	    lag.inwater(lag.ifound == 1)=1;
     else
         thost=nan(length(xp),1);
         idxa=find(grid.vx>= min(min(xp)) &grid.vx<= max(max(xp)) &grid.vy>= min(min(yp)) &grid.vy<= max(max(yp)));
@@ -87,7 +87,7 @@ function [lag,grid]=findfull(lag,grid,pter)
 	    lag.indomain=0*lag.indomain;
 	    lag.indomain(lag.ifound == 1)=1;
 	    lag.inwater=0*lag.inwater;
-	    lag.inwater(lag.ifound == 1 & lag.sbound == 0)=1;
+	    lag.inwater(lag.ifound == 1)=1;
 
     end
 
