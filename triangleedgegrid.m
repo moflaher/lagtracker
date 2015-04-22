@@ -78,8 +78,8 @@ function [grid]=triangleedgegrid(grid)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   Find the closest ## elements to each element and save them.              
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-stridx=find(grid.ncfile=='/');
-grid.name=grid.ncfile(max(stridx)+1:length(grid.ncfile)-8);
+stridx=find(grid.fvcompath=='/');
+grid.name=grid.fvcompath(max(stridx)+1:length(grid.fvcompath)-8);
 
 if (exist(['grid_closest/' grid.name '.mat'],'file')==0)
     disp('Calculating closest 40 elements to each element. This will take time for large n. Scale as O(n^2*log(n)) roughly.')

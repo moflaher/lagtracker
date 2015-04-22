@@ -29,6 +29,10 @@ classdef settingsdef
 		randomstate
         diffusionfudgefactor
         twoDflag
+        wave
+        wavepath
+        wind
+        windpath
 	end
 	
 	

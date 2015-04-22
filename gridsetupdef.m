@@ -64,7 +64,7 @@ classdef gridsetupdef
         nturbines
         turbines
         turbine_sigmas
-        ncfile
+        fvcompath
         time
         hele
         diffusion
@@ -80,6 +80,34 @@ classdef gridsetupdef
         kh2
         name
         istwoD
+        wave
+        wavepath
+        xWave
+        yWave
+        uinWave
+        vinWave
+        u1Wave
+        u2Wave
+        v1Wave
+        v2Wave
+        unc1Wave
+        unc2Wave
+        vnc1Wave
+        vnc2Wave
+        wind
+        windpath
+        xWind
+        yWind
+        uinWind
+        vinWind
+        u1Wind
+        u2Wind
+        v1Wind
+        v2Wind
+        unc1Wind
+        unc2Wind
+        vnc1Wind
+        vnc2Wind
 	end
 
 end

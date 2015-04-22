@@ -4,14 +4,14 @@ function [grid]=gridsetup(time,set)
 % Input: time,set
 % Return: grid
 %
-%   Loads data from ncfile and initializes arrays that will be used.
+%   Loads data from fvcompath and initializes arrays that will be used.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 ncid=netcdf.open(set.fvcompath,'NC_NOWRITE');
 grid=gridsetupdef;
 
-grid.ncfile=set.fvcompath;
+grid.fvcompath=set.fvcompath;
 if set.diffusion
     grid.diffusion=true;
 else

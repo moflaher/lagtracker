@@ -22,7 +22,14 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
         grid.viscofh1=grid.viscofhnc1;
         grid.kh1=grid.khnc1;
     end
-
+    if grid.wave
+        grid.u1Wave=grid.unc1Wave;
+        grid.v1Wave=grid.vnc1Wave;
+    end
+    if grid.wind
+        grid.u1Wind=grid.unc1Wind;
+        grid.v1Wind=grid.vnc1Wind;
+    end
 	
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -32,7 +39,7 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
 		
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Read velocity and elevation fields for next timestep from ncfile
+% Read velocity and elevation fields for next timestep from fvcompath
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		[grid]=ncdread(grid,nh);
 
@@ -60,11 +67,18 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
                     grid.viscofh2=tmp1*grid.viscofhnc1+tmp2*grid.viscofhnc2;
                     grid.kh2=tmp1*grid.khnc1+tmp2*grid.khnc2;
                 end
-                
-%turbine code has to be updated
-               % thm1=mod(nh-1,grid.size)+1;
-                %th=mod(nh,grid.size)+1;
-                %lag.turbine_sigma=tmp1*grid.zz(grid.turbine_sigmas(thm1,:))+tmp2*grid.zz(grid.turbine_sigmas(th,:));
+                if grid.wave
+        		    tmp2=it/time.i2;
+        		    tmp1=(it-time.i2)/-time.i2;
+                    grid.u2Wave=tmp1*grid.unc1Wave+tmp2*grid.unc2Wave;
+                    grid.v2Wave=tmp1*grid.vnc1Wave+tmp2*grid.vnc2Wave;
+                end
+                if grid.wind
+        		    tmp2=it/time.i2;
+        		    tmp1=(it-time.i2)/-time.i2;
+                    grid.u2Wind=tmp1*grid.unc1Wind+tmp2*grid.unc2Wind;
+                    grid.v2Wind=tmp1*grid.vnc1Wind+tmp2*grid.vnc2Wind;
+                end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Move particle.
@@ -109,12 +123,20 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
                 grid.viscofh1=grid.viscofh2;
                 grid.kh1=grid.kh2;
             end
+            if grid.wave
+                grid.u1Wave=grid.u2Wave;
+                grid.v1Wave=grid.v2Wave;
+            end
+            if grid.wind
+                grid.u1Wind=grid.u2Wind;
+                grid.v1Wind=grid.v2Wind;
+            end
 			
 
 		end%main2
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Time step update of velocity fields from ncfile.
+% Time step update of velocity fields from fvcompath.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		grid.unc1=grid.unc2;
 		grid.vnc1=grid.vnc2;
@@ -124,6 +146,14 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
             grid.viscofhnc1=grid.viscofhnc2;
             grid.khnc1=grid.khnc2;
         end	
+        if grid.wave
+            grid.unc1Wave=grid.unc2Wave;
+            grid.vnc1Wave=grid.vnc2Wave;
+        end
+        if grid.wind
+            grid.unc1Wind=grid.unc2Wind;
+            grid.vnc1Wind=grid.vnc2Wind;
+        end
 
 	end%mainfor
 
