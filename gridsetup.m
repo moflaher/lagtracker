@@ -17,6 +17,9 @@ if set.diffusion
 else
     grid.diffusion=false;
 end
+if set.twoDflag==true
+    grid.istwoD=true;
+end
 
 grid.vx=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'x'));
 grid.vy=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'y'));
@@ -51,7 +54,11 @@ grid.dedtin=zeros(grid.node,1);
 
 grid.unc1 = netcdf.getVar(ncid,netcdf.inqVarID(ncid,'u'),[0 0 set.start],[grid.nele grid.siglay 1]);
 grid.vnc1 = netcdf.getVar(ncid,netcdf.inqVarID(ncid,'v'),[0 0 set.start],[grid.nele grid.siglay 1]);
-grid.wnc1 = netcdf.getVar(ncid,netcdf.inqVarID(ncid,'ww'),[0 0 set.start],[grid.nele grid.siglay 1]);
+if grid.istwoD
+    grid.wnc1 = zeros(grid.nele,grid.siglay);
+else
+    grid.wnc1 = netcdf.getVar(ncid,netcdf.inqVarID(ncid,'ww'),[0 0 set.start],[grid.nele grid.siglay 1]);
+end
 grid.elnc1=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'zeta'),[0 set.start],[grid.node 1]);
 grid.time=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'time'));
 

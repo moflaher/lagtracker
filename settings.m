@@ -16,18 +16,18 @@ set=settingsdef;
 %set.fvcompath=['/media/moflaher/My Book/kit4/kit4_45days_3/output/kit4_0001.nc'];
 %set.fvcompath=['/media/moflaher/MB_3TB/kit4/kit4_kelp_20m_0.018/output/kit4_0001.nc'];
 %set.fvcompath=['/home/moflaher/workspace_matlab/runs/try16/output/beaufort3_0001.nc'];
-set.fvcompath=['/media/moe46/runs/sfm6_musq2/sfm6_musq2_no_cages/output/sfm6_musq2_0001.nc'];
+set.fvcompath=['/media/moe46/runs/kit4_kelp/kit4_kelp_nodrag/output/kit4_kelp_0001.nc'];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Starting step from ncfile
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-set.start=1008+seti;
+set.start=384+seti;
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % How many steps in ncfile to track for
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-set.track=200;
+set.track=120;
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -47,8 +47,8 @@ set.outputstep=60;
 % xysigstart settings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 set.starter=1;
-set.option=5;
-set.swimspeed=-.001;
+set.option=6;
+set.swimspeed=0;
 set.check_turbines=false;
 
 
@@ -59,7 +59,7 @@ set.check_turbines=false;
 set.diffusion=false;
 set.randomstate=100;
 set.diffusionfudgefactor=1;
-
+set.twoDflag=true;
 
 
 

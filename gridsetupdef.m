@@ -79,6 +79,7 @@ classdef gridsetupdef
         kh1
         kh2
         name
+        istwoD
 	end
 
 end

@@ -55,9 +55,9 @@ function [lag,grid]=findfull(lag,grid,pter)
 			    if ~isempty(tri)
 		                    lag.ifound(i)=1; 
 		                    lag.host(i)=tri(1);
-		                    if length(tri)>1 
-		                        tri
-		                    end
+%		                    if length(tri)>1 
+%		                        tri
+%		                    end
                 %else
                 %'no find' 
                 %i

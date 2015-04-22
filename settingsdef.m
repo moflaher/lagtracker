@@ -28,6 +28,7 @@ classdef settingsdef
         diffusion
 		randomstate
         diffusionfudgefactor
+        twoDflag
 	end
 	
 	

@@ -144,6 +144,47 @@ elseif set.option==5
         set.xstart(:,1) = savex;
 		set.ystart(:,1)  =  savey;
 		set.zstart(:,1) = zeros(length(savex),1);
+elseif set.option==6
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Start particles in box around elements in mat-file
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+    elementfile='element_starts/kit4_kelp_tight2_kelpfield_3elements.mat'
+    locationfile='element_starts/kit4_kelp_tight2_kelpfield_3elements_200x200_1000pp.mat'
+
+    if ~exist(locationfile)
+       load(elementfile)
+
+        savex=[];
+        savey=[];
+
+        pp=1000;
+        xbox_size=200;
+	    ybox_size=200;
+        for i=1:length(elements)
+
+		    xs=(rand(pp,1)-0.5)*xbox_size;
+		    ys=(rand(pp,1)-0.5)*ybox_size;
+		
+	        xs=grid.xc(elements(i))+xs;
+		    ys=grid.yc(elements(i))+ys;
+
+            savex=[savex; xs];
+            savey=[savey; ys]; 
+  
+
+        end  	
+        save(locationfile,'savex','savey')
+
+      else
+        display('Loading particle start location data.')
+        load(locationfile)
+      end
+
+
+        set.xstart(:,1) = savex;
+		set.ystart(:,1)  =  savey;
+		set.zstart(:,1) = zeros(length(savex),1);
    
 else
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
