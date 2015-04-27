@@ -94,20 +94,20 @@ classdef gridsetupdef
         unc2Wave
         vnc1Wave
         vnc2Wave
-        wind
-        windpath
-        xWind
-        yWind
-        uinWind
-        vinWind
-        u1Wind
-        u2Wind
-        v1Wind
-        v2Wind
-        unc1Wind
-        unc2Wind
-        vnc1Wind
-        vnc2Wind
+        tide
+        tidepath
+        xTide
+        yTide
+        uinTide
+        vinTide
+        u1Tide
+        u2Tide
+        v1Tide
+        v2Tide
+        unc1Tide
+        unc2Tide
+        vnc1Tide
+        vnc2Tide
 	end
 
 end

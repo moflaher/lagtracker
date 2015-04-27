@@ -96,7 +96,14 @@ end
             grid.viscofhin  = ((1-c_rk(ns))*grid.viscofh1 + c_rk(ns)*grid.viscofh2);
 		    grid.khin  = ((1-c_rk(ns))*grid.kh1 + c_rk(ns)*grid.kh2); 
         end	
-
+        if grid.wave
+            grid.uinWave  = ((1-c_rk(ns))*grid.u1Wave + c_rk(ns)*grid.u2Wave);
+            grid.vinWave  = ((1-c_rk(ns))*grid.v1Wave + c_rk(ns)*grid.v2Wave);
+        end	
+        if grid.tide
+            grid.uinTide  = ((1-c_rk(ns))*grid.u1Tide + c_rk(ns)*grid.u2Tide);
+            grid.vinTide  = ((1-c_rk(ns))*grid.v1Tide + c_rk(ns)*grid.v2Tide);
+        end	
         
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

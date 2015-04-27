@@ -101,11 +101,11 @@ if grid.wave
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Determine velocity at (xp,yp,sigpt) for wind
+% Determine velocity at (xp,yp,sigpt) for tide
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-if grid.wind
-    lag.up(array)=lag.up(array)+interp2(grid.xWind,grid.yWind,grid.uinWind,lag.xpt(array),lag.ypt(array))
-    lag.vp(array)=lag.vp(array)+interp2(grid.xWind,grid.yWind,grid.vinWind,lag.xpt(array),lag.ypt(array))
+if grid.tide
+    lag.up(array)=lag.up(array)+interp2(grid.xTide,grid.yTide,grid.uinTide,lag.xpt(array),lag.ypt(array))
+    lag.vp(array)=lag.vp(array)+interp2(grid.xTide,grid.yTide,grid.vinTide,lag.xpt(array),lag.ypt(array))
 end
     
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

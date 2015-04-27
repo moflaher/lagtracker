@@ -31,8 +31,8 @@ classdef settingsdef
         twoDflag
         wave
         wavepath
-        wind
-        windpath
+        tide
+        tidepath
 	end
 	
 	

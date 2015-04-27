@@ -18,7 +18,7 @@ set=settingsdef;
 %set.fvcompath=['/home/moflaher/workspace_matlab/runs/try16/output/beaufort3_0001.nc'];
 set.fvcompath=['/media/moe46/runs/kit4_kelp/kit4_kelp_nodrag/output/kit4_kelp_0001.nc'];
 set.wavepath=[''];
-set.windpath=[''];
+set.tidepath=[''];
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -61,7 +61,7 @@ set.check_turbines=false;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 set.diffusion=false;
 set.wave=false
-set.wind=false
+set.tide=false
 set.randomstate=100;
 set.diffusionfudgefactor=1;
 set.twoDflag=true;

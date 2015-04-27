@@ -26,9 +26,9 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
         grid.u1Wave=grid.unc1Wave;
         grid.v1Wave=grid.vnc1Wave;
     end
-    if grid.wind
-        grid.u1Wind=grid.unc1Wind;
-        grid.v1Wind=grid.vnc1Wind;
+    if grid.tide
+        grid.u1Tide=grid.unc1Tide;
+        grid.v1Tide=grid.vnc1Tide;
     end
 	
 
@@ -73,11 +73,11 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
                     grid.u2Wave=tmp1*grid.unc1Wave+tmp2*grid.unc2Wave;
                     grid.v2Wave=tmp1*grid.vnc1Wave+tmp2*grid.vnc2Wave;
                 end
-                if grid.wind
+                if grid.tide
         		    tmp2=it/time.i2;
         		    tmp1=(it-time.i2)/-time.i2;
-                    grid.u2Wind=tmp1*grid.unc1Wind+tmp2*grid.unc2Wind;
-                    grid.v2Wind=tmp1*grid.vnc1Wind+tmp2*grid.vnc2Wind;
+                    grid.u2Tide=tmp1*grid.unc1Tide+tmp2*grid.unc2Tide;
+                    grid.v2Tide=tmp1*grid.vnc1Tide+tmp2*grid.vnc2Tide;
                 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -127,9 +127,9 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
                 grid.u1Wave=grid.u2Wave;
                 grid.v1Wave=grid.v2Wave;
             end
-            if grid.wind
-                grid.u1Wind=grid.u2Wind;
-                grid.v1Wind=grid.v2Wind;
+            if grid.tide
+                grid.u1Tide=grid.u2Tide;
+                grid.v1Tide=grid.v2Tide;
             end
 			
 
@@ -150,9 +150,9 @@ function [lag,grid,time]=lagupdate(lag,grid,time)
             grid.unc1Wave=grid.unc2Wave;
             grid.vnc1Wave=grid.vnc2Wave;
         end
-        if grid.wind
-            grid.unc1Wind=grid.unc2Wind;
-            grid.vnc1Wind=grid.vnc2Wind;
+        if grid.tide
+            grid.unc1Tide=grid.unc2Tide;
+            grid.vnc1Tide=grid.vnc2Tide;
         end
 
 	end%mainfor
