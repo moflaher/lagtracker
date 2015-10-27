@@ -118,7 +118,8 @@ function [lag,grid]=interpolate_diffusion(lag,grid,ifc)
   
         
         leveldiff=grid.hele(host).*grid.z(k2)-grid.hele(host).*grid.z(k1);
-        lag.khz(array)= (khe02-khe01)./leveldiff;
+        lag.khz(array)= (khe02-khe01)./-leveldiff;
+
         
 
 

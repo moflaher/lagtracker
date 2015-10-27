@@ -15,12 +15,14 @@ if grid.diffusion
     grid.vnc2 = netcdf.getVar(ncid,netcdf.inqVarID(ncid,'v'),[0 0 nh],[grid.nele grid.siglay 1]);
     if grid.istwoD
         grid.wnc2 = zeros(grid.nele,grid.siglay);   
+        grid.khnc2 = zeros(grid.node,grid.siglev);
     else
         grid.wnc2 = netcdf.getVar(ncid,netcdf.inqVarID(ncid,'ww'),[0 0 nh],[grid.nele grid.siglay 1]);
+        grid.khnc2 = netcdf.getVar(ncid,netcdf.inqVarID(ncid,'kh'),[0 0 nh],[grid.node grid.siglev 1]);
     end  
     grid.elnc2=netcdf.getVar(ncid,netcdf.inqVarID(ncid,'zeta'),[0 nh],[grid.node 1]);
     grid.viscofhnc2 = netcdf.getVar(ncid,netcdf.inqVarID(ncid,'viscofh'),[0 0 nh],[grid.node grid.siglay 1]);
-    grid.khnc2 = netcdf.getVar(ncid,netcdf.inqVarID(ncid,'kh'),[0 0 nh],[grid.node grid.siglev 1]);
+    
 
 else
 
